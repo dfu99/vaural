@@ -21,7 +21,12 @@ def pretrain_receiver(
     """Pre-train the receiver using identity mapping (sound = action).
 
     The receiver learns to invert Environment(ActionToSignal(x)).
+    Requires sound_dim == action_dim for the identity mapping.
     """
+    assert cfg.sound_dim == cfg.action_dim, (
+        f"Receiver pre-training requires sound_dim == action_dim "
+        f"(got {cfg.sound_dim} vs {cfg.action_dim})"
+    )
     sounds = torch.randn(cfg.receiver_samples, cfg.sound_dim)
 
     # Pre-compute transformed inputs (fixed transforms, no grad needed)
@@ -58,6 +63,7 @@ def pretrain_receiver(
             print(f"  Receiver epoch {epoch + 1}/{cfg.receiver_epochs}, loss: {avg_loss:.6f}")
 
     return losses
+
 
 
 def train_emitter(pipeline: Pipeline, cfg: Config) -> list[float]:

@@ -129,27 +129,23 @@ def main():
         results.append(r)
     all_results["lr_sweep"] = results
 
-    # ── Experiment 4: Asymmetric dimensions ──
+    # ── Experiment 4: Signal dim scaling (sound=action=16, vary signal) ──
     print("\n" + "=" * 60)
-    print("Experiment 4: Asymmetric dims")
+    print("Experiment 4: Signal dim scaling (sound=action=16)")
     print("=" * 60)
     results = []
-    for name, sound, action, signal in [
-        ("bottleneck", 32, 16, 32),
-        ("matched",    32, 32, 32),
-        ("expansion",  32, 64, 32),
-    ]:
+    for sig in [8, 16, 32]:
         cfg = Config(
-            sound_dim=sound, action_dim=action, signal_dim=signal,
-            hidden_dim=128,
+            sound_dim=16, action_dim=16, signal_dim=sig,
+            hidden_dim=64,
             receiver_epochs=FAST_RECV_EPOCHS, emitter_epochs=FAST_EMIT_EPOCHS,
             receiver_samples=FAST_SAMPLES, emitter_samples=FAST_SAMPLES,
             plot_every=9999,
         )
-        r = run_experiment(cfg, name)
-        r.update({"sound_dim": sound, "action_dim": action, "signal_dim": signal})
+        r = run_experiment(cfg, f"signal={sig}")
+        r["signal_dim"] = sig
         results.append(r)
-    all_results["asymmetric"] = results
+    all_results["signal_scaling"] = results
 
     # Save
     path = "outputs/sweep/results.json"

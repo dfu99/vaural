@@ -145,6 +145,16 @@ class TestEdgeCases:
 
 
 class TestReceiverPretraining:
+    def test_asymmetric_dims_rejected(self):
+        """Receiver pre-training requires sound_dim == action_dim."""
+        cfg = Config(sound_dim=16, action_dim=8, signal_dim=16,
+                     receiver_epochs=1, receiver_samples=100)
+        a2s = ActionToSignal(cfg.action_dim, cfg.signal_dim, seed=100)
+        env = Environment(cfg.signal_dim, seed=200)
+        rec = Receiver(cfg.signal_dim, cfg.sound_dim, cfg.hidden_dim)
+        with pytest.raises(AssertionError, match="sound_dim == action_dim"):
+            pretrain_receiver(a2s, env, rec, cfg)
+
     def test_receiver_learns_to_invert(self, cfg, action_to_signal, environment):
         torch.manual_seed(cfg.seed)
         rec = Receiver(cfg.signal_dim, cfg.sound_dim, cfg.hidden_dim)
