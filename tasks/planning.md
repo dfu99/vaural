@@ -2,13 +2,13 @@
 
 ## Current Priorities
 
-1. **Complete parameter sweep** — sweep.py is ready but too slow on CPU. Run it on GPU or in smaller batches. Key experiments to finish:
-   - Dimension scaling: dim=64 with h=256 (dim=8/16/32 fast results below)
+1. **VQ bottleneck experiment** — Add vector quantization to Emitter output to test emergent discrete "phoneme-like" units. This is the next research-informed experiment after joint training.
+2. **Scale joint training to higher dims with more epochs** — dim=16 was underfitted at 600 epochs; run with 2k+ epochs to see if joint training advantage holds at scale
+3. **Add GPU support** — add device handling to Config/training; CPU is too slow for dim≥16 experiments
+4. **Complete parameter sweep** — sweep.py is ready but too slow on CPU. Key experiments:
+   - Dimension scaling: dim=64 with h=256
    - Hidden dim scaling at dim=32: h=[64, 128, 256]
    - LR sweep at dim=16: lr=[3e-4, 1e-3, 3e-3, 1e-2]
-   - Signal dim scaling (sound=action=16, signal varies): sig=[8, 16, 32]
-2. **Scale to larger dimensions** — once sweep identifies best hidden/LR, run dim=64 and dim=128 with full training epochs
-3. **Consider GPU support** — add device handling to Config/training if GPU available; CPU training is very slow at dim≥32
 
 ## Partial Sweep Results (300 recv + 500 emit epochs, 2k samples — fast/underfitted)
 
@@ -31,13 +31,12 @@
 ## Next Steps
 
 ### Research-informed experiments (see tasks/research.md)
-- **Joint training experiment**: Unfreeze Receiver during Emitter training; compare convergence and MSE to sequential baseline — this directly tests the sensorimotor coupling hypothesis
 - **VQ bottleneck**: Add vector quantization to Emitter output to test emergent discrete "phoneme-like" units
 - **Internal feedback loss**: Add DIVA-inspired auditory error map loss term
+- **Multi-agent communication**: Multiple Emitter-Receiver pairs through a common channel
 
 ### Scaling and optimization
-- Run full training (2k+3k epochs) for dim=32 with h=128 and h=256 to compare
-- If GPU available, run dim=64 and dim=128 experiments
+- Scale joint training to dim=16/32 with 2k+ epochs (needs GPU or patience)
 - Add early stopping to training loops to avoid wasting compute
 - Consider LR scheduling (cosine annealing or step decay)
 
@@ -53,3 +52,4 @@
 - Ran fast sweep for dim=8/16/32: dim=8 converges easily, larger dims need more training
 - Completed sensorimotor hypothesis research review (tasks/research.md)
 - Created README.md with architecture diagram, results, milestones, and research context
+- **Joint training experiment**: Joint beats sequential 2.7x at dim=8 (MSE 0.000710 vs 0.001909); near-equal at dim=16 (both underfitted)

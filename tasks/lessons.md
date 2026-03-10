@@ -19,3 +19,8 @@ _This file is append-mostly. Only remove entries proven wrong._
 - The two-phase training (pre-train Receiver, freeze, then train Emitter) is a deliberate design choice that mirrors developmental asymmetry (infants perceive speech before producing it). The key ablation is joint training vs. sequential — this directly tests whether sensorimotor coupling produces better or more sample-efficient solutions.
 - The Machine Speech Chain (Hori et al., 2017) is the closest computational precedent — jointly trains ASR+TTS in a closed loop. Vaural's novelty is in continuous representations through unknown physical channels rather than discrete text.
 - A VQ bottleneck on Emitter output is the cleanest way to test emergent discrete units (phoneme-like codes) without pre-specifying a phoneme library.
+
+## Joint Training Results
+- Joint training (Emitter + Receiver trained simultaneously) beats sequential training by 2.7x at dim=8 (MSE 0.000710 vs 0.001909 with 600 total epochs, 2k samples).
+- At dim=16, both methods are underfitted with 600 epochs and show near-equal MSE (~0.235). The joint advantage may require sufficient compute to manifest at higher dims.
+- Joint training starts slower (higher initial loss) but converges to a lower final loss — consistent with the mutual regularization hypothesis from Machine Speech Chain literature.

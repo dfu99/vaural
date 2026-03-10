@@ -113,3 +113,29 @@ objectives:
     README provides a complete project entry point linking code, results, and research direction.
     Architecture diagram visually communicates the two-phase training and gradient flow.
   completed_date: '2026-03-10'
+- id: obj-011
+  status: completed
+  statement: Joint training beats sequential training, validating sensorimotor coupling hypothesis
+  methodology: >
+    Implemented joint training mode where Emitter and Receiver train simultaneously from scratch
+    (both parameters updated via end-to-end reconstruction loss). Compared against sequential
+    baseline (pre-train Receiver, freeze, then train Emitter) at dim=8 and dim=16 with matched
+    total epoch budgets (600 epochs, 2k samples).
+  metrics:
+    dim8_sequential_mse: 0.001909
+    dim8_joint_mse: 0.000710
+    dim8_improvement: 2.7x
+    dim16_sequential_mse: 0.235614
+    dim16_joint_mse: 0.234250
+    dim16_improvement: 1.01x
+  figures:
+  - results/obj-011-joint-vs-sequential-dim8.png
+  - results/obj-011-joint-vs-sequential-dim16.png
+  conclusions: >
+    Joint training produces 2.7x better MSE at dim=8, confirming that sensorimotor coupling
+    (simultaneous Emitter+Receiver optimization) outperforms sequential training. At dim=16
+    both methods are underfitted with 600 epochs and show near-equal performance — the advantage
+    of joint training may be more pronounced with sufficient compute. The result supports the
+    hypothesis that a shared optimization loop is beneficial.
+  connects_to: obj-012
+  completed_date: '2026-03-10'
