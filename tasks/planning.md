@@ -30,6 +30,12 @@
 
 ## Next Steps
 
+### Research-informed experiments (see tasks/research.md)
+- **Joint training experiment**: Unfreeze Receiver during Emitter training; compare convergence and MSE to sequential baseline — this directly tests the sensorimotor coupling hypothesis
+- **VQ bottleneck**: Add vector quantization to Emitter output to test emergent discrete "phoneme-like" units
+- **Internal feedback loss**: Add DIVA-inspired auditory error map loss term
+
+### Scaling and optimization
 - Run full training (2k+3k epochs) for dim=32 with h=128 and h=256 to compare
 - If GPU available, run dim=64 and dim=128 experiments
 - Add early stopping to training loops to avoid wasting compute
@@ -45,3 +51,5 @@
 - Added assertion + test for the constraint
 - Ran baseline training: dim=16 test MSE = 0.000254
 - Ran fast sweep for dim=8/16/32: dim=8 converges easily, larger dims need more training
+- Completed sensorimotor hypothesis research review (tasks/research.md)
+- Created README.md with architecture diagram, results, milestones, and research context

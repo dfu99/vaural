@@ -76,3 +76,40 @@ objectives:
   - results/obj-008-ran-fast-sweep-for-dim-8-16-32--dim-8-co.png
   conclusions: ''
   completed_date: '2026-03-10'
+- id: obj-009
+  status: completed
+  statement: Literature review of sensorimotor feedback loops and joint audio embedding spaces
+  methodology: >
+    Used research-scout to survey neuroscience (DIVA, INFERNO), ML (Machine Speech Chain,
+    HuBERT, VQ-VAE, AudioLM, CLAP), and emergent communication (Lewis games) literature.
+    Evaluated hypothesis against existing work and identified novel angles.
+  metrics:
+    papers_reviewed: 15
+    novel_angles_identified: 3
+    existing_precedents: 6
+  figures:
+  - results/obj-009-research-landscape.png
+  conclusions: >
+    Hypothesis is well-grounded in neuroscience (DIVA model) and has computational precedents
+    (Machine Speech Chain 2017). Vaural's novelty lies in continuous communication through
+    unknown random channels and the two-phase training design. Key next experiment: joint
+    training ablation to test whether sensorimotor coupling beats sequential learning.
+  connects_to: obj-010
+  completed_date: '2026-03-10'
+- id: obj-010
+  status: completed
+  statement: Created README with architecture diagram, results, milestones, and research context
+  methodology: >
+    Generated matplotlib architecture diagram showing pipeline flow and gradient path.
+    Wrote comprehensive README.md with motivation, architecture, current results table,
+    visualization gallery, quickstart, project structure, research context, and milestone roadmap.
+  metrics:
+    sections_written: 9
+    visualizations_referenced: 6
+    milestones_defined: 12
+  figures:
+  - outputs/architecture_diagram.png
+  conclusions: >
+    README provides a complete project entry point linking code, results, and research direction.
+    Architecture diagram visually communicates the two-phase training and gradient flow.
+  completed_date: '2026-03-10'

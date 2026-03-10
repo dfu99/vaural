@@ -51,3 +51,4 @@ Training happens in two phases:
 |------|-------------|
 | `tasks/planning.md` | Starting any work session; checking priorities |
 | `tasks/lessons.md` | Before modifying training, components, or tests |
+| `tasks/research.md` | Before designing new experiments or changing architecture direction |

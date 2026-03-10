@@ -14,3 +14,8 @@ _This file is append-mostly. Only remove entries proven wrong._
 
 ## Sweep Execution
 - Parameter sweeps with many configs timeout on CPU. Run experiments individually or use very small epoch counts for quick screening, then validate winners with full training.
+
+## Research Direction
+- The two-phase training (pre-train Receiver, freeze, then train Emitter) is a deliberate design choice that mirrors developmental asymmetry (infants perceive speech before producing it). The key ablation is joint training vs. sequential — this directly tests whether sensorimotor coupling produces better or more sample-efficient solutions.
+- The Machine Speech Chain (Hori et al., 2017) is the closest computational precedent — jointly trains ASR+TTS in a closed loop. Vaural's novelty is in continuous representations through unknown physical channels rather than discrete text.
+- A VQ bottleneck on Emitter output is the cleanest way to test emergent discrete units (phoneme-like codes) without pre-specifying a phoneme library.
