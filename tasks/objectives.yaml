@@ -1,0 +1,78 @@
+objectives:
+- id: obj-001
+  status: completed
+  statement: 'Initial project scaffolding verified: all 26 tests pass'
+  methodology: ''
+  metrics:
+    test: 26
+  figures:
+  - results/obj-001-initial-project-scaffolding-verified--al.png
+  conclusions: ''
+  connects_to: obj-002
+  completed_date: '2026-03-10'
+- id: obj-002
+  status: completed
+  statement: Git repo initialized with .gitignore
+  methodology: ''
+  figures:
+  - results/obj-002-git-repo-initialized-with--gitignore.png
+  conclusions: ''
+  connects_to: obj-003
+  completed_date: '2026-03-10'
+- id: obj-003
+  status: completed
+  statement: 'Optimized training loops: replaced DataLoader with direct index slicing, pre-compute fixed transforms in receiver
+    pre-training'
+  methodology: ''
+  figures:
+  - results/obj-002-git-repo-initialized-with--gitignore.png
+  conclusions: ''
+  connects_to: obj-004
+  completed_date: '2026-03-10'
+- id: obj-004
+  status: completed
+  statement: Added parameter sweep script (sweep.py) with 4 experiment types
+  methodology: ''
+  figures:
+  - results/obj-002-git-repo-initialized-with--gitignore.png
+  conclusions: ''
+  connects_to: obj-005
+  completed_date: '2026-03-10'
+- id: obj-005
+  status: completed
+  statement: Discovered and documented sound_dim==action_dim constraint
+  methodology: ''
+  figures:
+  - results/obj-005-discovered-and-documented-sound-dim--act.png
+  conclusions: ''
+  connects_to: obj-006
+  completed_date: '2026-03-10'
+- id: obj-006
+  status: completed
+  statement: Added assertion + test for the constraint
+  methodology: ''
+  figures:
+  - results/obj-006-added-assertion---test-for-the-constrain.png
+  conclusions: ''
+  connects_to: obj-007
+  completed_date: '2026-03-10'
+- id: obj-007
+  status: completed
+  statement: 'Ran baseline training: dim=16 test MSE = 0.000254'
+  methodology: ''
+  metrics:
+    test: 16
+    mse: 0.000254
+  figures:
+  - results/obj-006-added-assertion---test-for-the-constrain.png
+  conclusions: ''
+  connects_to: obj-008
+  completed_date: '2026-03-10'
+- id: obj-008
+  status: completed
+  statement: 'Ran fast sweep for dim=8/16/32: dim=8 converges easily, larger dims need more training'
+  methodology: ''
+  figures:
+  - results/obj-008-ran-fast-sweep-for-dim-8-16-32--dim-8-co.png
+  conclusions: ''
+  completed_date: '2026-03-10'
