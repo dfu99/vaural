@@ -113,6 +113,33 @@ objectives:
     README provides a complete project entry point linking code, results, and research direction.
     Architecture diagram visually communicates the two-phase training and gradient flow.
   completed_date: '2026-03-10'
+- id: obj-012
+  status: completed
+  statement: VQ bottleneck capacity curve shows codebook size vs reconstruction tradeoff
+  methodology: >
+    Implemented VectorQuantizer with EMA codebook updates and straight-through gradients.
+    Swept codebook sizes [4, 8, 16, 32, 64, 128, 256] at dim=8 with 300 epochs each.
+    Measured test MSE, codebook utilization (active codes), and entropy at each size.
+  metrics:
+    codebook_4_mse: 1.887
+    codebook_16_mse: 1.312
+    codebook_64_mse: 0.740
+    codebook_256_mse: 0.441
+    continuous_mse: 0.002
+    all_codebooks_fully_utilized: true
+    max_entropy_utilization: 0.97
+  figures:
+  - results/obj-012-vq-capacity-curve.png
+  - results/obj-012-vq-bottleneck-codebook.png
+  conclusions: >
+    VQ bottleneck works correctly with excellent codebook utilization (near 100% active,
+    near-max entropy at all sizes). MSE decreases monotonically with codebook size but
+    even 256 codes (MSE=0.44) is far from continuous (MSE=0.002). Reconstructing continuous
+    8D random vectors through discrete codes requires exponentially many codes. This validates
+    the VQ mechanism but shows the fundamental discretization bottleneck. For meaningful emergent
+    phonemes, the input should be structured (not random) to benefit from discrete compression.
+  connects_to: obj-013
+  completed_date: '2026-03-10'
 - id: obj-011
   status: completed
   statement: Joint training beats sequential training, validating sensorimotor coupling hypothesis

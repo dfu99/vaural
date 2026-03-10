@@ -24,3 +24,9 @@ _This file is append-mostly. Only remove entries proven wrong._
 - Joint training (Emitter + Receiver trained simultaneously) beats sequential training by 2.7x at dim=8 (MSE 0.000710 vs 0.001909 with 600 total epochs, 2k samples).
 - At dim=16, both methods are underfitted with 600 epochs and show near-equal MSE (~0.235). The joint advantage may require sufficient compute to manifest at higher dims.
 - Joint training starts slower (higher initial loss) but converges to a lower final loss — consistent with the mutual regularization hypothesis from Machine Speech Chain literature.
+
+## VQ Bottleneck
+- EMA codebook updates (not gradient-based) are essential — gradient-based codebook updates cause encoder-codebook divergence where VQ loss dominates training.
+- Initialize codebook from encoder outputs, not random — otherwise the codebook starts far from the encoder distribution and never recovers.
+- Random continuous inputs (Gaussian N(0,1)) don't benefit from discrete VQ codes. With dim=8, even 256 codes (MSE=0.44) are far from continuous (MSE=0.002). Discretization only helps when inputs have exploitable structure (clusters, categories).
+- Codebook utilization is excellent in this setup — all codes active, near-max entropy at every size. The VQ mechanism works; the bottleneck is fundamental capacity vs. continuous data.

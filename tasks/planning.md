@@ -2,7 +2,7 @@
 
 ## Current Priorities
 
-1. **VQ bottleneck experiment** — Add vector quantization to Emitter output to test emergent discrete "phoneme-like" units. This is the next research-informed experiment after joint training.
+1. **Structured input for VQ** — Random continuous inputs don't benefit from discrete codes. Next: use structured/clustered inputs where VQ can discover meaningful categories (true "phoneme emergence").
 2. **Scale joint training to higher dims with more epochs** — dim=16 was underfitted at 600 epochs; run with 2k+ epochs to see if joint training advantage holds at scale
 3. **Add GPU support** — add device handling to Config/training; CPU is too slow for dim≥16 experiments
 4. **Complete parameter sweep** — sweep.py is ready but too slow on CPU. Key experiments:
@@ -31,7 +31,7 @@
 ## Next Steps
 
 ### Research-informed experiments (see tasks/research.md)
-- **VQ bottleneck**: Add vector quantization to Emitter output to test emergent discrete "phoneme-like" units
+- **Structured VQ input**: Use clustered/categorical inputs where VQ codes can discover meaningful phoneme-like categories
 - **Internal feedback loss**: Add DIVA-inspired auditory error map loss term
 - **Multi-agent communication**: Multiple Emitter-Receiver pairs through a common channel
 
@@ -53,3 +53,4 @@
 - Completed sensorimotor hypothesis research review (tasks/research.md)
 - Created README.md with architecture diagram, results, milestones, and research context
 - **Joint training experiment**: Joint beats sequential 2.7x at dim=8 (MSE 0.000710 vs 0.001909); near-equal at dim=16 (both underfitted)
+- **VQ bottleneck capacity curve**: Codebook sizes 4-256 at dim=8; all fully utilized with near-max entropy; MSE decreases monotonically but even 256 codes far from continuous baseline
