@@ -42,7 +42,7 @@
 
 ## Recently Completed
 
-- Initial project scaffolding verified: all 26 tests pass
+- Initial project scaffolding verified: all 27 tests pass
 - Git repo initialized with .gitignore
 - Optimized training loops: replaced DataLoader with direct index slicing, pre-compute fixed transforms in receiver pre-training
 - Added parameter sweep script (sweep.py) with 4 experiment types

@@ -1,0 +1,60 @@
+max_chain: 10
+queue:
+- objective: 'Complete documentation for: Initial project scaffolding verified: all
+    27 tests pass. Record methodology, conclusions, and generate a visualization.'
+  priority: 4
+  status: completed
+  added: 2026-03-11 23:54
+  source: auto-requeue
+  started: 2026-03-13 01:14
+  completed: 2026-03-13
+- objective: 'Complete documentation for: Git repo initialized with .gitignore. Record
+    methodology, conclusions, and generate a visualization.'
+  priority: 4
+  status: pending
+  added: 2026-03-11 23:54
+  source: auto-requeue
+- objective: 'Complete documentation for: Optimized training loops: replaced DataLoader
+    with direct index slicing, pre-compute fixed transforms in receiver pre-training.
+    Record methodology, conclusions, and generate a visualization.'
+  priority: 4
+  status: pending
+  added: 2026-03-11 23:54
+  source: auto-requeue
+- objective: 'Complete documentation for: Added parameter sweep script (sweep.py)
+    with 4 experiment types. Record methodology, conclusions, and generate a visualization.'
+  priority: 4
+  status: pending
+  added: 2026-03-11 23:54
+  source: auto-requeue
+- objective: 'Complete documentation for: Discovered and documented sound_dim==action_dim
+    constraint. Record methodology, conclusions, and generate a visualization.'
+  priority: 4
+  status: pending
+  added: 2026-03-11 23:54
+  source: auto-requeue
+- objective: 'Complete documentation for: Added assertion + test for the constraint.
+    Record methodology, conclusions, and generate a visualization.'
+  priority: 4
+  status: pending
+  added: 2026-03-11 23:54
+  source: auto-requeue
+- objective: 'Complete documentation for: Ran baseline training: dim=16 test MSE =
+    0.000254. Record methodology, conclusions, and generate a visualization.'
+  priority: 4
+  status: pending
+  added: 2026-03-11 23:54
+  source: auto-requeue
+- objective: 'Complete documentation for: Ran fast sweep for dim=8/16/32: dim=8 converges
+    easily, larger dims need more training. Record methodology, conclusions, and generate
+    a visualization.'
+  priority: 4
+  status: pending
+  added: 2026-03-11 23:54
+  source: auto-requeue
+- objective: investigate this research problem from the point of view of rotational
+    invariance
+  priority: 3
+  status: pending
+  added: 2026-03-12 15:06
+  source: slack
