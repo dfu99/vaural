@@ -96,10 +96,26 @@ objectives:
 - id: obj-005
   status: completed
   statement: Discovered and documented sound_dim==action_dim constraint
-  methodology: ''
+  methodology: >
+    During sweep.py Experiment 4 (asymmetric action dims), attempted configurations
+    with sound_dim != action_dim (bottleneck 32→16→32, expansion 32→64→32). These
+    crashed with shape mismatches, revealing that pretrain_receiver() uses an identity
+    mapping (sound = action) which requires both dimensions to match. Root cause:
+    sounds are sampled as randn(N, sound_dim) then passed directly to ActionToSignal
+    which expects (N, action_dim) inputs. Documented the constraint in planning.md
+    and redesigned Experiment 4 to vary signal_dim instead (channel bandwidth).
+  metrics:
+    configurations_that_crashed: 2
+    root_cause: identity_mapping_in_pretrain_receiver
+    sweep_experiment_redesigned: 'Exp 4: asymmetric action → signal_dim scaling'
   figures:
-  - results/obj-005-discovered-and-documented-sound-dim--act.png
-  conclusions: ''
+  - results/obj-005-sound-dim-action-dim-constraint.png
+  conclusions: >
+    The identity mapping assumption (sound IS the action during receiver pre-training)
+    is a fundamental architectural constraint, not a bug. Supporting asymmetric
+    sound_dim/action_dim would require a different pre-training strategy (e.g., a
+    learned encoder instead of identity). This discovery led to obj-006 (assertion +
+    test) and informed all subsequent experiment designs to keep sound_dim == action_dim.
   connects_to: obj-006
   completed_date: '2026-03-10'
 - id: obj-006
