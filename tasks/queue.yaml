@@ -20,15 +20,18 @@ queue:
     with direct index slicing, pre-compute fixed transforms in receiver pre-training.
     Record methodology, conclusions, and generate a visualization.'
   priority: 4
-  status: pending
+  status: completed
   added: 2026-03-11 23:54
   source: auto-requeue
+  started: 2026-03-13 01:15
+  completed: 2026-03-13
 - objective: 'Complete documentation for: Added parameter sweep script (sweep.py)
     with 4 experiment types. Record methodology, conclusions, and generate a visualization.'
   priority: 4
-  status: pending
+  status: in_progress
   added: 2026-03-11 23:54
   source: auto-requeue
+  started: 2026-03-13 01:17
 - objective: 'Complete documentation for: Discovered and documented sound_dim==action_dim
     constraint. Record methodology, conclusions, and generate a visualization.'
   priority: 4

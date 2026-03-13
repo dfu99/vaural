@@ -46,19 +46,51 @@ objectives:
   status: completed
   statement: 'Optimized training loops: replaced DataLoader with direct index slicing, pre-compute fixed transforms in receiver
     pre-training'
-  methodology: ''
+  methodology: >
+    Replaced torch.utils.data DataLoader/TensorDataset with direct torch.randperm
+    index slicing for both training loops. In pretrain_receiver(), pre-computed
+    ActionToSignal and Environment transforms once outside the epoch loop (since
+    these are fixed random linear transforms with no learnable parameters), eliminating
+    redundant forward passes every batch. Removed DataLoader dependency entirely.
+  metrics:
+    dataloader_removed: true
+    dependencies_removed: 2
+    receiver_forward_passes_reduced: 'E*B*3 → E*B*1'
+    fixed_transform_calls: 'E*B*2 → 1'
   figures:
-  - results/obj-002-git-repo-initialized-with--gitignore.png
-  conclusions: ''
+  - results/obj-003-training-loop-optimization.png
+  conclusions: >
+    Two key optimizations: (1) pre-computing fixed transforms in receiver pre-training
+    reduces forward passes from 3 per batch (ActionToSignal + Environment + Receiver)
+    to 1 (Receiver only), saving ~67% of forward-pass compute; (2) replacing DataLoader
+    with index slicing removes shuffle/collate overhead and the torch.utils.data
+    dependency. Both loops now use minimal pure-PyTorch operations.
   connects_to: obj-004
   completed_date: '2026-03-10'
 - id: obj-004
   status: completed
   statement: Added parameter sweep script (sweep.py) with 4 experiment types
-  methodology: ''
+  methodology: >
+    Created sweep.py with a reusable run_experiment() harness that instantiates
+    the full pipeline, trains both phases, and evaluates on normal and uniform test
+    distributions. Defined 4 experiments: (1) dimension scaling [8,16,32,64],
+    (2) hidden dim scaling [64,128,256] at dim=32, (3) learning rate sweep
+    [3e-4,1e-3,3e-3], (4) asymmetric/signal dim scaling. Uses fast defaults
+    (500 recv, 800 emit epochs, 3k samples) for rapid iteration. Results saved
+    to JSON for downstream analysis.
+  metrics:
+    experiment_types: 4
+    total_configurations: 13
+    metrics_per_run: 7
+    output_format: JSON
   figures:
-  - results/obj-002-git-repo-initialized-with--gitignore.png
-  conclusions: ''
+  - results/obj-004-parameter-sweep-script.png
+  conclusions: >
+    The sweep script enables systematic exploration of the hyperparameter space
+    with minimal boilerplate. Each run captures receiver loss, emitter loss, test MSE
+    on two distributions, parameter counts, and wall-clock time. Fast training defaults
+    allow a full 13-configuration sweep in minutes, with findings validated later via
+    main.py at full scale.
   connects_to: obj-005
   completed_date: '2026-03-10'
 - id: obj-005
