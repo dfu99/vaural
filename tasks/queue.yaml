@@ -52,19 +52,24 @@ queue:
 - objective: 'Complete documentation for: Ran baseline training: dim=16 test MSE =
     0.000254. Record methodology, conclusions, and generate a visualization.'
   priority: 4
-  status: pending
+  status: completed
   added: 2026-03-11 23:54
   source: auto-requeue
+  started: 2026-03-13 01:22
+  completed: 2026-03-13
 - objective: 'Complete documentation for: Ran fast sweep for dim=8/16/32: dim=8 converges
     easily, larger dims need more training. Record methodology, conclusions, and generate
     a visualization.'
   priority: 4
-  status: pending
+  status: completed
   added: 2026-03-11 23:54
   source: auto-requeue
+  started: 2026-03-13
+  completed: 2026-03-13
 - objective: investigate this research problem from the point of view of rotational
     invariance
   priority: 3
-  status: pending
+  status: in_progress
   added: 2026-03-12 15:06
   source: slack
+  started: 2026-03-13 02:19
