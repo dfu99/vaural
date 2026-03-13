@@ -104,11 +104,26 @@ objectives:
   completed_date: '2026-03-10'
 - id: obj-006
   status: completed
-  statement: Added assertion + test for the constraint
-  methodology: ''
+  statement: Added assertion + test for the sound_dim==action_dim constraint
+  methodology: >
+    Added an assertion at the top of pretrain_receiver() in train.py (line 26) that
+    raises AssertionError with a descriptive message when sound_dim != action_dim.
+    Added a corresponding pytest guard (test_asymmetric_dims_rejected) that creates
+    a Config with sound_dim=16, action_dim=8 and verifies the assertion fires before
+    any training occurs. This prevents silent shape mismatches or wrong gradients
+    from the identity mapping assumption.
+  metrics:
+    assertion_location: 'train.py:26'
+    test_location: 'test_vaural.py:148'
+    total_tests_after: 28
+    failure_mode_prevented: shape_mismatch_or_silent_wrong_gradients
   figures:
   - results/obj-006-added-assertion---test-for-the-constrain.png
-  conclusions: ''
+  conclusions: >
+    The assertion catches misconfigurations at the earliest possible point (start of
+    receiver pre-training) with a clear error message. The pytest guard ensures this
+    check is never accidentally removed during refactoring. Together they codify the
+    architectural constraint discovered in obj-005 into enforceable code.
   connects_to: obj-007
   completed_date: '2026-03-10'
 - id: obj-007
