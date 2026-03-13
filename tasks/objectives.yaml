@@ -145,22 +145,67 @@ objectives:
 - id: obj-007
   status: completed
   statement: 'Ran baseline training: dim=16 test MSE = 0.000254'
-  methodology: ''
+  methodology: >
+    Ran main.py with default Config (sound_dim=action_dim=signal_dim=16, hidden_dim=64,
+    seed=42). Phase 1 pre-trained the Receiver for 2000 epochs on 10k samples (identity
+    mapping through ActionToSignal+Environment). Phase 2 trained the Emitter for 3000
+    epochs on 10k samples with frozen Receiver. Both phases used Adam optimizer at lr=1e-3
+    with batch size 64. Evaluated on 100 held-out random sound tokens (randn).
   metrics:
-    test: 16
-    mse: 0.000254
+    sound_dim: 16
+    action_dim: 16
+    signal_dim: 16
+    hidden_dim: 64
+    receiver_epochs: 2000
+    emitter_epochs: 3000
+    samples: 10000
+    batch_size: 64
+    learning_rate: 0.001
+    test_mse: 0.000254
+    test_tokens: 100
   figures:
-  - results/obj-006-added-assertion---test-for-the-constrain.png
-  conclusions: ''
+  - results/obj-007-baseline-training-dim16.png
+  conclusions: >
+    The default dim=16 configuration achieves excellent reconstruction (MSE=0.000254)
+    with full training (5000 total epochs). This establishes the baseline for all
+    subsequent experiments. The result confirms that the two-phase sequential pipeline
+    can learn near-perfect reconstruction at dim=16 given sufficient training, contrasting
+    with the fast sweep (obj-008) where 800 total epochs produced MSE=0.161.
   connects_to: obj-008
   completed_date: '2026-03-10'
 - id: obj-008
   status: completed
   statement: 'Ran fast sweep for dim=8/16/32: dim=8 converges easily, larger dims need more training'
-  methodology: ''
+  methodology: >
+    Used sweep.py Experiment 1 (dimension scaling) with fast training settings
+    (300 receiver + 500 emitter epochs, 2k samples) to test dim=8/16/32 with
+    sound_dim=action_dim=signal_dim. Hidden dim scaled as max(64, dim*4): h=64 for
+    dim=8/16, h=128 for dim=32. Evaluated on 200 held-out samples from both normal
+    and uniform distributions. Compared fast sweep results against the dim=16 full
+    training baseline (obj-007, MSE=0.000254) to quantify the training gap.
+  metrics:
+    dim8_test_mse: 0.000168
+    dim8_uniform_mse: 0.000043
+    dim16_test_mse: 0.161204
+    dim16_uniform_mse: 0.049080
+    dim32_test_mse: 0.079817
+    dim32_uniform_mse: 0.025893
+    dim16_ratio_vs_dim8: 960x
+    dim32_ratio_vs_dim8: 475x
+    receiver_epochs: 300
+    emitter_epochs: 500
+    samples: 2000
   figures:
-  - results/obj-008-ran-fast-sweep-for-dim-8-16-32--dim-8-co.png
-  conclusions: ''
+  - results/obj-008-dim-sweep.png
+  conclusions: >
+    dim=8 achieves near-perfect reconstruction (MSE=0.000168) even with fast/reduced
+    training, while dim=16 and dim=32 are ~960x and ~475x worse respectively. Comparing
+    dim=16 fast (MSE=0.161) vs full training (MSE=0.000254) shows a 634x gap, confirming
+    that larger dimensions need substantially more epochs and samples to converge — not
+    just more capacity. dim=32 actually outperforms dim=16 in fast training likely due
+    to its larger hidden dim (128 vs 64). This establishes dim=8 as the go-to for rapid
+    prototyping and dim>=16 experiments as requiring full training budgets.
+  connects_to: obj-009
   completed_date: '2026-03-10'
 - id: obj-009
   status: completed
