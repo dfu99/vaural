@@ -356,5 +356,41 @@ objectives:
     The dominant factor remains the spectrum (4x MSE change from κ=1 to κ=100), but
     rotation is a meaningful secondary factor. This suggests rotation-equivariant
     architectures could reduce variance and improve worst-case performance.
+  connects_to: obj-016
+  completed_date: '2026-03-14'
+- id: obj-016
+  status: completed
+  statement: Joint training reduces rotation sensitivity at moderate κ but not at extremes
+  methodology: >
+    Extended obj-015 by comparing sequential vs joint training across 8 random rotations
+    at each of 3 fixed spectra (κ=1, 10, 100). 48 total pipeline trainings at dim=8
+    (400 recv + 500 emit = 900 total epochs, 2k samples). Measured both absolute MSE
+    and rotation CV for each training mode × spectrum combination.
+  metrics:
+    kappa1_seq_mse: 0.000079
+    kappa1_seq_cv: 0.133
+    kappa1_jnt_mse: 0.000354
+    kappa1_jnt_cv: 0.205
+    kappa10_seq_mse: 0.000153
+    kappa10_seq_cv: 0.234
+    kappa10_jnt_mse: 0.000284
+    kappa10_jnt_cv: 0.105
+    kappa100_seq_mse: 0.000317
+    kappa100_seq_cv: 0.202
+    kappa100_jnt_mse: 0.026828
+    kappa100_jnt_cv: 0.520
+    total_configurations: 48
+  figures:
+  - results/obj-016-rotation-sensitivity-joint-vs-seq.png
+  conclusions: >
+    Joint training's effect on rotational invariance depends on channel difficulty.
+    At κ=10, joint training halves rotation CV (23.4% → 10.5%) at the cost of 1.9× worse
+    absolute MSE — it genuinely becomes more rotation-invariant. At κ=1, both modes achieve
+    low MSE but sequential is better on both MSE and CV. At κ=100, joint training is severely
+    underfitted (MSE 85× worse) with high rotation variance (CV 52%). The sweet spot for
+    joint training's rotation-invariance benefit is moderate conditioning where the co-adapted
+    Emitter+Receiver can distribute inversion work more flexibly than the Receiver-only
+    strategy of sequential training, but the channel isn't so hard that 900 epochs is
+    insufficient for joint discovery.
   connects_to: null
   completed_date: '2026-03-14'

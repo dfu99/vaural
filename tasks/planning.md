@@ -40,11 +40,23 @@
 - Add early stopping to training loops to avoid wasting compute
 - Consider LR scheduling (cosine annealing or step decay)
 
+## Rotational Invariance Investigation Summary (obj-013 → obj-016)
+
+Four experiments systematically characterized rotational invariance:
+
+1. **obj-013**: Channel κ dominates; Receiver inverts (Jacobian ≈ M⁻¹), Emitter ≈ identity
+2. **obj-014**: Joint training reduces channel sensitivity 94% (474× → 28× ill/ortho ratio)
+3. **obj-015**: Pure rotation test — system NOT rotationally invariant (CV 13-23% at fixed spectrum). ReLU axis-alignment causes inherent MLP orientation bias.
+4. **obj-016**: Joint training halves rotation CV at κ=10 (23% → 10.5%) but is underfitted at κ=100 (CV 52%, MSE 85× worse). Sweet spot is moderate conditioning.
+
+**Key conclusions**: Spectrum dominates (4× MSE from κ=1→100), rotation is secondary (up to 2.3× within fixed spectrum). Joint training can improve rotation invariance at moderate κ but needs more epochs for hard channels. Rotation-equivariant architectures are a promising direction.
+
 ## Recently Completed
 
-- **Pure rotational invariance test** (obj-015): Separated spectrum from rotation effects. Fixed σ spectrum, varied U,V rotations (8 per spectrum). System is NOT rotationally invariant — CV 13-23% across rotations at fixed spectrum. Even at κ=1 (pure rotation), MSE varies 1.43×, revealing MLP orientation bias from ReLU axis-alignment. Spectrum still dominates (4× MSE change κ=1→100) but rotation is a meaningful secondary factor.
-- **Rotational invariance experiment** (obj-013): System is NOT rotationally invariant. Orthogonal channels 17x easier than random, 471x easier than ill-conditioned. Receiver does all inversion (Jacobian ≈ M⁻¹), Emitter stays near-identity. Error concentrates on weak singular directions (~1/σ²).
-- **Joint training experiment**: Joint beats sequential 2.7x at dim=8 (MSE 0.000710 vs 0.001909); near-equal at dim=16 (both underfitted)
-- **VQ bottleneck capacity curve**: Codebook sizes 4-256 at dim=8; all fully utilized with near-max entropy; MSE decreases monotonically but even 256 codes far from continuous baseline
+- **Joint training × rotation sensitivity** (obj-016): Joint halves rotation CV at κ=10 but is underfitted at κ=100. Sweet spot is moderate conditioning.
+- **Pure rotational invariance test** (obj-015): System NOT rotationally invariant — CV 13-23% across rotations at fixed spectrum. ReLU axis-alignment bias.
+- **Joint vs channel geometry** (obj-014): Joint training reduces channel sensitivity by 94%.
+- **Rotational invariance experiment** (obj-013): Receiver inverts channel, Emitter stays near-identity. Error ∝ 1/σ².
+- **Joint training experiment** (obj-011): Joint beats sequential 2.7x at dim=8
+- **VQ bottleneck capacity curve** (obj-012): All codebooks fully utilized; discretization bottleneck is fundamental
 - Completed sensorimotor hypothesis research review (tasks/research.md)
-- Created README.md with architecture diagram, results, milestones, and research context
