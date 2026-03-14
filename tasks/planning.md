@@ -42,15 +42,8 @@
 
 ## Recently Completed
 
-- Initial project scaffolding verified: all 27 tests pass
-- Git repo initialized with .gitignore
-- Optimized training loops: replaced DataLoader with direct index slicing, pre-compute fixed transforms in receiver pre-training
-- Added parameter sweep script (sweep.py) with 4 experiment types
-- Discovered and documented sound_dim==action_dim constraint
-- Added assertion + test for the constraint
-- Ran baseline training: dim=16 test MSE = 0.000254
-- Ran fast sweep for dim=8/16/32: dim=8 converges easily, larger dims need more training
 - Completed sensorimotor hypothesis research review (tasks/research.md)
 - Created README.md with architecture diagram, results, milestones, and research context
 - **Joint training experiment**: Joint beats sequential 2.7x at dim=8 (MSE 0.000710 vs 0.001909); near-equal at dim=16 (both underfitted)
 - **VQ bottleneck capacity curve**: Codebook sizes 4-256 at dim=8; all fully utilized with near-max entropy; MSE decreases monotonically but even 256 codes far from continuous baseline
+- **Rotational invariance experiment** (obj-013): System is NOT rotationally invariant. Orthogonal channels 17x easier than random, 471x easier than ill-conditioned. Receiver does all inversion (Jacobian ≈ M⁻¹), Emitter stays near-identity. Error concentrates on weak singular directions (~1/σ²).

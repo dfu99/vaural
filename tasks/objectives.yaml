@@ -297,3 +297,33 @@ objectives:
     hypothesis that a shared optimization loop is beneficial.
   connects_to: obj-012
   completed_date: '2026-03-10'
+- id: obj-013
+  status: completed
+  statement: Channel geometry dominates learning; Receiver inverts channel, Emitter stays near-identity
+  methodology: >
+    Compared orthogonal (κ=1), random Gaussian (κ=62), and ill-conditioned (κ=1000) channel
+    transforms at dim=8 with 400 recv + 500 emit epochs. Measured per-direction reconstruction
+    error vs singular values. Computed Emitter and Receiver Jacobians to determine which component
+    learns the channel inversion. Analyzed Emitter output variance per singular direction.
+  metrics:
+    orthogonal_mse: 0.000076
+    random_mse: 0.001327
+    ill_conditioned_mse: 0.035831
+    orthogonal_condition_number: 1.0
+    random_condition_number: 61.9
+    ill_condition_number: 1000.0
+    emitter_jacobian_dist_from_identity: 0.497
+    emitter_jacobian_dist_from_M_inv: 4.297
+    receiver_jacobian_dist_from_M_inv: 0.629
+    error_ratio_weak_vs_strong_direction: 18.8
+  figures:
+  - results/rotational_invariance.png
+  conclusions: >
+    The system is NOT rotationally invariant. Orthogonal channels are 17x easier than random
+    and 471x easier than ill-conditioned. The Receiver does all channel inversion (Jacobian ≈ M⁻¹)
+    while the Emitter learns a near-identity mapping. Error concentrates on weak singular directions
+    (proportional to 1/σ²). This means the two-phase design creates an asymmetry: the Receiver
+    handles the hard problem (inverting the channel) during pre-training, and the Emitter just
+    passes through. Architecturally, the Emitter has no incentive to pre-compensate.
+  connects_to: null
+  completed_date: '2026-03-13'

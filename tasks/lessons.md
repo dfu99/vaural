@@ -30,3 +30,9 @@ _This file is append-mostly. Only remove entries proven wrong._
 - Initialize codebook from encoder outputs, not random — otherwise the codebook starts far from the encoder distribution and never recovers.
 - Random continuous inputs (Gaussian N(0,1)) don't benefit from discrete VQ codes. With dim=8, even 256 codes (MSE=0.44) are far from continuous (MSE=0.002). Discretization only helps when inputs have exploitable structure (clusters, categories).
 - Codebook utilization is excellent in this setup — all codes active, near-max entropy at every size. The VQ mechanism works; the bottleneck is fundamental capacity vs. continuous data.
+
+## Channel Geometry & Rotational Invariance
+- **The system is NOT rotationally invariant.** Channel condition number (κ) is the dominant factor in reconstruction quality. Orthogonal channels (κ=1) are 17x easier than random (κ=62) and 471x easier than ill-conditioned (κ=1000).
+- **The Receiver does all channel inversion, not the Emitter.** Receiver Jacobian ≈ M⁻¹ (Frobenius distance 0.63). Emitter Jacobian ≈ I (Frobenius distance 0.50 from identity). The Emitter has no incentive to pre-compensate because the Receiver already handles the inversion during pre-training.
+- **Error concentrates on weak singular directions.** Per-direction MSE is roughly proportional to 1/σ². The direction with σ=0.28 has 18.8x more error than σ=17.5. This means the MLP Receiver can't perfectly invert directions that are severely attenuated by the channel.
+- **Running many duplicate experiment processes can happen** if the experiment takes a long time and multiple attempts are launched. Always check for existing processes before re-running.
