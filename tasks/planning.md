@@ -42,8 +42,9 @@
 
 ## Recently Completed
 
-- Completed sensorimotor hypothesis research review (tasks/research.md)
-- Created README.md with architecture diagram, results, milestones, and research context
+- **Pure rotational invariance test** (obj-015): Separated spectrum from rotation effects. Fixed σ spectrum, varied U,V rotations (8 per spectrum). System is NOT rotationally invariant — CV 13-23% across rotations at fixed spectrum. Even at κ=1 (pure rotation), MSE varies 1.43×, revealing MLP orientation bias from ReLU axis-alignment. Spectrum still dominates (4× MSE change κ=1→100) but rotation is a meaningful secondary factor.
+- **Rotational invariance experiment** (obj-013): System is NOT rotationally invariant. Orthogonal channels 17x easier than random, 471x easier than ill-conditioned. Receiver does all inversion (Jacobian ≈ M⁻¹), Emitter stays near-identity. Error concentrates on weak singular directions (~1/σ²).
 - **Joint training experiment**: Joint beats sequential 2.7x at dim=8 (MSE 0.000710 vs 0.001909); near-equal at dim=16 (both underfitted)
 - **VQ bottleneck capacity curve**: Codebook sizes 4-256 at dim=8; all fully utilized with near-max entropy; MSE decreases monotonically but even 256 codes far from continuous baseline
-- **Rotational invariance experiment** (obj-013): System is NOT rotationally invariant. Orthogonal channels 17x easier than random, 471x easier than ill-conditioned. Receiver does all inversion (Jacobian ≈ M⁻¹), Emitter stays near-identity. Error concentrates on weak singular directions (~1/σ²).
+- Completed sensorimotor hypothesis research review (tasks/research.md)
+- Created README.md with architecture diagram, results, milestones, and research context

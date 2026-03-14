@@ -325,5 +325,36 @@ objectives:
     (proportional to 1/σ²). This means the two-phase design creates an asymmetry: the Receiver
     handles the hard problem (inverting the channel) during pre-training, and the Emitter just
     passes through. Architecturally, the Emitter has no incentive to pre-compensate.
-  connects_to: null
+  connects_to: obj-015
   completed_date: '2026-03-13'
+- id: obj-015
+  status: completed
+  statement: Pure rotational invariance test separates spectrum from rotation effects
+  methodology: >
+    Held singular value spectrum fixed at three levels (κ=1, κ=10, κ=100) and varied
+    only the rotation matrices U, V (8 random pairs each). Trained full sequential
+    pipeline for each of 24 configurations at dim=8 (400 recv + 500 emit epochs, 2k
+    samples). Measured MSE distribution across rotations at each fixed spectrum.
+  metrics:
+    flat_kappa1_mean_mse: 0.000079
+    flat_kappa1_cv: 0.133
+    flat_kappa1_max_min_ratio: 1.43
+    moderate_kappa10_mean_mse: 0.000153
+    moderate_kappa10_cv: 0.234
+    moderate_kappa10_max_min_ratio: 2.31
+    steep_kappa100_mean_mse: 0.000317
+    steep_kappa100_cv: 0.202
+    steep_kappa100_max_min_ratio: 1.95
+    total_configurations: 24
+  figures:
+  - results/obj-015-pure-rotational-invariance.png
+  conclusions: >
+    The system is NOT rotationally invariant. Even with identical singular value spectra,
+    different rotation matrices U, V cause 13-23% coefficient of variation in MSE and up
+    to 2.3x max/min spread. Notably, even at κ=1 (all σ=1, pure rotation channel), MSE
+    varies by 1.43x — demonstrating inherent MLP orientation bias from ReLU axis-alignment.
+    The dominant factor remains the spectrum (4x MSE change from κ=1 to κ=100), but
+    rotation is a meaningful secondary factor. This suggests rotation-equivariant
+    architectures could reduce variance and improve worst-case performance.
+  connects_to: null
+  completed_date: '2026-03-14'
