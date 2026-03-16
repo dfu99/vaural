@@ -40,9 +40,9 @@
 - Add early stopping to training loops to avoid wasting compute
 - Consider LR scheduling (cosine annealing or step decay)
 
-## Rotational Invariance Investigation Summary (obj-013 → obj-021)
+## Rotational Invariance Investigation Summary (obj-013 → obj-022)
 
-Nine experiments systematically characterized rotational invariance:
+Ten experiments systematically characterized rotational invariance:
 
 1. **obj-013**: Channel κ dominates; Receiver inverts (Jacobian ≈ M⁻¹), Emitter ≈ identity
 2. **obj-014**: Joint training reduces channel sensitivity 94% (474× → 28× ill/ortho ratio)
@@ -52,17 +52,20 @@ Nine experiments systematically characterized rotational invariance:
 6. **obj-018**: 2×2 factorial (activation × training mode) — SiLU+Sequential is the best combination. Joint training makes rotation sensitivity WORSE (CV 28-44%), not better.
 7. **obj-019**: Channel rotation adaptation — Emitter CAN learn the pre-rotation M₂⁻¹M₁ when forced to compensate (Jacobian 50-100× closer to target than identity). ~3× MSE penalty vs oracle. SiLU enables consistent adaptation (CV 10%) vs ReLU (CV 66%).
 8. **obj-020**: Residual rotation sensitivity diagnosis — 80% of SiLU's remaining CV is training noise (SGD stochasticity), only 20% is true rotation dependence. Wider networks (h=128, 256) improve MSE but NOT invariance. LayerNorm hurts MSE 6× without improving CV.
-9. **obj-021**: Adaptation speed curve — Emitter reaches functional communication (~2.7× oracle) within 50 epochs. Two-phase pattern: rapid discovery (0-50 epochs, 16×→2.7×) then slow refinement (50-200 epochs, 2.7×→2.3×). The 2.3× residual is the "accent effect" — M₁-Receiver biases can't be fully compensated.
+9. **obj-021**: Adaptation speed curve — Emitter reaches functional communication (~2.7× oracle) within 50 epochs. Two-phase pattern: rapid discovery (0-50 epochs, 16×→2.7×) then slow refinement (50-200 epochs, 2.7×→2.3×). The 2.3× residual is the "accent effect."
+10. **obj-022**: Accent accommodation — Joint fine-tuning (warm-started from M₁ Receiver) closes 93% of the accent gap (1.10× oracle). Sequential fine-tuning closes 69% (1.44× oracle). Key insight: joint training from warm start >> joint training from scratch (reconciling obj-018's negative result with obj-011's positive one).
 
-**Key conclusions**: The rotational invariance investigation is **definitively complete**. SiLU (now the default in components.py) solves rotation invariance — residual CV (~2%) is training noise. When channel rotation does occur, the Emitter adapts within ~50 epochs to functional communication (2.7× oracle), converging to a 2.3× "accent" penalty. No further architectural intervention helps.
+**Key conclusions**: The rotational invariance investigation is **complete**. The full story:
+- **Static invariance**: SiLU activation eliminates rotation sensitivity (CV ~2%, residual is training noise)
+- **Dynamic adaptation**: When channel rotates, Emitter adapts in ~50 epochs to 2.7× oracle (accent effect)
+- **Accent accommodation**: Joint fine-tuning from warm start closes 93% of the gap, reaching 1.10× oracle
+- **Architecture**: SiLU is now the default in components.py. No other architectural change needed.
 
-**Open questions for future work**:
-- Does κ affect adaptation quality? (harder channels = harder to adapt?)
-- Can Receiver fine-tuning on the new channel close the 2.3× gap? (accent accommodation)
-- Validate findings at dim=16+ (requires GPU)
+**Remaining open question**: Validate findings at dim=16+ (requires GPU)
 
 ## Recently Completed
 
+- **Accent accommodation** (obj-022): Joint fine-tuning closes 93% of accent gap (1.10× oracle). Sequential FT closes 69% (1.44×). Joint from warm start >> joint from scratch.
 - **Adaptation speed curve** (obj-021): Emitter reaches functional adaptation in ~50 epochs (2.7× oracle). Two-phase: rapid discovery then slow refinement. Residual 2.3× penalty = "accent effect."
 - **SiLU default switch**: Changed Emitter and Receiver activations from ReLU to SiLU in components.py. All 27 tests pass.
 - **Residual rotation sensitivity** (obj-020): 80% of SiLU's remaining CV is training noise, not rotation structure. Wider nets and LayerNorm don't help. SiLU effectively solves rotational invariance.

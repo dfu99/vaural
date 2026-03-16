@@ -573,5 +573,39 @@ objectives:
     "accent effect": the M₁-Receiver's channel-specific biases can never be fully
     compensated by the Emitter alone. This also validates the SiLU switch — all 4
     rotations show consistent adaptation curves (no axis-alignment variation).
+  connects_to: obj-022
+  completed_date: '2026-03-16'
+
+- id: obj-022
+  status: completed
+  statement: Joint fine-tuning closes 90% of the accent gap — near-oracle adaptation
+  methodology: >
+    Compared 3 adaptation strategies when channel rotates from M₁ to M₂ (κ=10, dim=8,
+    SiLU): (1) Emitter-only with frozen M₁-Receiver, (2) Joint fine-tuning (both
+    Emitter+Receiver update), (3) Sequential fine-tuning (Receiver first on M₂ identity
+    mapping, then Emitter). Tested across 4 rotations. 100 recv + 200 emit epochs, 1k
+    samples per run.
+  metrics:
+    emitter_only_mse: 0.000505
+    emitter_only_ratio: 2.43
+    joint_ft_mse: 0.000229
+    joint_ft_ratio: 1.10
+    sequential_ft_mse: 0.000299
+    sequential_ft_ratio: 1.44
+    oracle_mse: 0.000208
+    baseline_mse: 0.000217
+    gap_closed_by_seq_ft_pct: 69
+    gap_closed_by_joint_ft_pct: 93
+  figures:
+  - results/obj-022-accent-accommodation.png
+  conclusions: >
+    Joint fine-tuning nearly eliminates the accent gap: 1.10× oracle (vs 2.43×
+    emitter-only). Sequential fine-tuning is intermediate at 1.44× oracle. Joint FT
+    closes 93% of the gap, sequential closes 69%. This is a key reversal from
+    obj-018 where joint training hurt — the difference is that here the Receiver
+    starts from a good initialization (M₁ pre-training) rather than random init.
+    Joint fine-tuning from a warm start is vastly better than joint training from
+    scratch. Biological analogy: "accent accommodation" (listener adapting to speaker)
+    is most effective when both parties adjust simultaneously.
   connects_to: null
   completed_date: '2026-03-16'
