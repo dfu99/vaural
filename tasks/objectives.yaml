@@ -430,5 +430,40 @@ objectives:
     rotation. Smooth activations (SiLU, GELU, Tanh) don't have this axis bias.
     Tanh has the lowest CV (6.0%) but worse MSE due to output saturation.
     Recommendation: switch default activation from ReLU to SiLU.
+  connects_to: obj-018
+  completed_date: '2026-03-16'
+- id: obj-018
+  status: completed
+  statement: SiLU+Sequential is the best combination for rotational invariance
+  methodology: >
+    Ran 2×2 factorial experiment: (ReLU vs SiLU) × (Sequential vs Joint) across
+    8 random rotations at 3 fixed spectra (κ=1, 10, 100). 96 total pipeline
+    trainings at dim=8 (400 recv + 500 emit = 900 total epochs, 2k samples).
+    Tested whether combining SiLU activation with joint training achieves
+    synergistic rotational invariance improvement.
+  metrics:
+    relu_seq_mean_cv: 0.190
+    relu_seq_mean_mse: 0.000183
+    relu_joint_mean_cv: 0.277
+    relu_joint_mean_mse: 0.009156
+    silu_seq_mean_cv: 0.088
+    silu_seq_mean_mse: 0.000033
+    silu_joint_mean_cv: 0.437
+    silu_joint_mean_mse: 0.008300
+    silu_joint_kappa100_cv: 0.657
+    silu_joint_kappa100_max_min: 342.4
+    total_configurations: 96
+  figures:
+  - results/obj-018-silu-joint-rotation.png
+  conclusions: >
+    NO SYNERGY between SiLU and joint training. Joint training makes rotation
+    sensitivity WORSE regardless of activation (CV 28-44% vs 9-19% for sequential).
+    SiLU+Sequential is the clear winner: best MSE (0.000033), best rotation
+    invariance (CV 8.8%), and remarkably insensitive to channel condition number
+    (MSE barely changes from κ=1 to κ=100). Joint training is underfitted at 900
+    epochs — the simultaneous optimization is harder, and the instability shows
+    up as high rotation variance. The sequential two-phase approach provides a
+    stable optimization path that is inherently more rotationally invariant.
+    This completes the rotational invariance investigation arc (obj-013 → obj-018).
   connects_to: null
   completed_date: '2026-03-16'
