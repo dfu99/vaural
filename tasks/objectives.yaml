@@ -465,5 +465,44 @@ objectives:
     up as high rotation variance. The sequential two-phase approach provides a
     stable optimization path that is inherently more rotationally invariant.
     This completes the rotational invariance investigation arc (obj-013 → obj-018).
+  connects_to: obj-019
+  completed_date: '2026-03-16'
+
+- id: obj-019
+  status: completed
+  statement: 'Channel rotation adaptation: Emitter learns pre-rotation when Receiver is frozen'
+  methodology: >
+    Pre-trained Receiver on channel M₁ (κ=10, dim=8), then tested adaptation to 4
+    rotated channels M₂ with same spectrum but different U,V matrices. For each
+    rotation: (a) trained fresh Emitter with frozen M₁-Receiver on M₂ channel
+    (adaptation), (b) trained fresh Receiver+Emitter on M₂ (oracle baseline).
+    Compared ReLU vs SiLU activations. Computed Emitter Jacobians and compared
+    to theoretical target transform M₂⁻¹M₁.
+  metrics:
+    relu_baseline_mse: 0.000159
+    relu_adapted_mse_mean: 0.000444
+    relu_oracle_mse_mean: 0.000139
+    relu_adaptation_ratio: 3.17
+    relu_J_target_dist: 0.147
+    relu_J_identity_dist: 7.926
+    relu_ratio_cv: 0.66
+    silu_baseline_mse: 0.000049
+    silu_adapted_mse_mean: 0.000138
+    silu_oracle_mse_mean: 0.000047
+    silu_adaptation_ratio: 2.91
+    silu_J_target_dist: 0.082
+    silu_J_identity_dist: 7.861
+    silu_ratio_cv: 0.10
+  figures:
+  - results/obj-019-rotation-adaptation.png
+  conclusions: >
+    The Emitter CAN learn the theoretically predicted pre-rotation M₂⁻¹M₁ when
+    forced to compensate for a Receiver-channel mismatch. Jacobian is 50-100×
+    closer to target than identity. Adaptation costs ~3× MSE vs oracle (the
+    "accent effect"). SiLU enables remarkably consistent adaptation (CV 10%)
+    while ReLU is highly variable (CV 66%). This extends the rotation invariance
+    arc: the system can dynamically compensate for channel rotations through
+    Emitter adaptation, and SiLU's lack of axis-alignment bias makes this
+    adaptation reliable across arbitrary rotations.
   connects_to: null
   completed_date: '2026-03-16'
