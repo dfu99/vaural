@@ -504,5 +504,40 @@ objectives:
     arc: the system can dynamically compensate for channel rotations through
     Emitter adaptation, and SiLU's lack of axis-alignment bias makes this
     adaptation reliable across arbitrary rotations.
+  connects_to: obj-020
+  completed_date: '2026-03-16'
+
+- id: obj-020
+  status: completed
+  statement: Residual rotation sensitivity is training noise, not structural MLP bias
+  methodology: >
+    Decomposed SiLU rotation CV into between-rotation vs within-rotation (training seed)
+    variance at κ=10. Tested 4 rotations × 3 seeds = 12 runs. Then compared 4
+    configurations (SiLU h=64/128/256, SiLU+LayerNorm h=64) across 2 spectra (κ=1, 10)
+    × 4 rotations = 32 runs. All at dim=8, 100 recv + 200 emit epochs, 1k samples.
+  metrics:
+    between_rotation_variance_pct: 20
+    within_rotation_seed_variance_pct: 80
+    rotation_cv_at_kappa10: 0.017
+    mean_seed_cv_at_kappa10: 0.033
+    silu_h64_mean_cv: 0.021
+    silu_h128_mean_cv: 0.027
+    silu_h256_mean_cv: 0.158
+    silu_ln_h64_mean_cv: 0.035
+    silu_h64_mean_mse: 0.000266
+    silu_h128_mean_mse: 0.000096
+    silu_h256_mean_mse: 0.000060
+    silu_ln_h64_mean_mse: 0.001529
+  figures:
+  - results/obj-019-residual-rotation-sensitivity.png
+  conclusions: >
+    The residual rotation CV with SiLU (~2% in this run) is dominated by SGD
+    training noise (80% of variance), not structural rotation sensitivity (20%).
+    Wider networks (h=128, 256) improve MSE but do NOT improve rotation invariance —
+    h=256 actually has worse CV (15.8%) due to overfitting variance. LayerNorm hurts
+    MSE 6× without improving CV. The conclusion is that SiLU effectively solves the
+    rotational invariance problem for this architecture. The remaining variance is
+    irreducible training stochasticity, not a rotation-dependent structural bias.
+    This closes the rotational invariance investigation: the answer is "use SiLU."
   connects_to: null
   completed_date: '2026-03-16'
