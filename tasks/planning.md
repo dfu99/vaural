@@ -63,10 +63,11 @@ Eleven experiments systematically characterized rotational invariance:
 - **Accent accommodation**: Joint fine-tuning from warm start closes 93% of the gap, reaching 1.10× oracle
 - **Architecture**: SiLU is now the default in components.py. No other architectural change needed.
 
-**Remaining open question**: Validate findings at dim=16+ (requires GPU)
+**dim=16 validation (obj-024)**: SiLU advantage confirmed at dim=16 (CV 1.9% vs 5.1% ReLU, MSE 2.3× better). Both activations show less rotation sensitivity at higher dims (averaging over more directions), but SiLU consistently wins. No remaining open questions.
 
 ## Recently Completed
 
+- **dim=16 validation** (obj-024): SiLU advantage holds at dim=16 (CV 1.9% vs 5.1%, MSE 2.3× better). Both less sensitive at higher dims. No open questions remain.
 - **Rotation mechanism** (obj-023): ReLU has 18 kinks per trajectory (5.7× spikier curvature) vs 0 for SiLU. Binary neuron switching at rotation-dependent angles is the root cause.
 - **Accent accommodation** (obj-022): Joint fine-tuning closes 93% of accent gap (1.10× oracle). Sequential FT closes 69% (1.44×). Joint from warm start >> joint from scratch.
 - **Adaptation speed curve** (obj-021): Emitter reaches functional adaptation in ~50 epochs (2.7× oracle). Two-phase: rapid discovery then slow refinement. Residual 2.3× penalty = "accent effect."

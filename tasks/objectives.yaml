@@ -640,5 +640,35 @@ objectives:
     features: training converges to different local optima depending on which neurons
     happen to activate for a given channel rotation. SiLU's smooth landscape has no
     such orientation-dependent structure, yielding consistent training outcomes.
+  connects_to: obj-024
+  completed_date: '2026-03-16'
+
+- id: obj-024
+  status: completed
+  statement: SiLU rotation invariance advantage validated at dim=16
+  methodology: >
+    Compared ReLU vs SiLU rotation sensitivity at dim=16 (h=128, κ=10, 4 rotations,
+    200 recv + 300 emit epochs, 2k samples). This validates the dim=8 findings at
+    higher dimensions where SO(d) is larger and ReLU has more coordinate axes.
+  metrics:
+    relu_mean_mse: 0.000365
+    relu_cv: 0.051
+    relu_max_min: 1.13
+    silu_mean_mse: 0.000156
+    silu_cv: 0.019
+    silu_max_min: 1.05
+    mse_improvement: 2.3
+    cv_improvement: 2.7
+    dim8_relu_cv_reference: 0.190
+    dim8_silu_cv_reference: 0.088
+  figures:
+  - results/obj-024-dim16-rotation.png
+  conclusions: >
+    SiLU advantage VALIDATED at dim=16: 2.3× better MSE and 2.7× lower rotation CV
+    than ReLU. Interestingly, both activations show less rotation sensitivity at dim=16
+    (ReLU 5.1% vs 19% at dim=8, SiLU 1.9% vs 9%) — higher dimensions average over
+    more directions, reducing the impact of any single axis-alignment. But SiLU still
+    consistently wins. This closes the last open question in the rotation invariance
+    investigation — the findings generalize to higher dimensions.
   connects_to: null
   completed_date: '2026-03-16'
