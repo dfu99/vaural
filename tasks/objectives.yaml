@@ -392,5 +392,43 @@ objectives:
     Emitter+Receiver can distribute inversion work more flexibly than the Receiver-only
     strategy of sequential training, but the channel isn't so hard that 900 epochs is
     insufficient for joint discovery.
-  connects_to: null
+  connects_to: obj-017
   completed_date: '2026-03-14'
+- id: obj-017
+  status: completed
+  statement: Activation function causes rotational sensitivity — SiLU best overall
+  methodology: >
+    Compared 4 activation functions (ReLU, GELU, SiLU, Tanh) across 8 random
+    rotations at 3 fixed spectra (κ=1, 10, 100) using sequential training at dim=8
+    (400 recv + 500 emit epochs, 2k samples). 96 total pipeline trainings. Measured
+    rotation CV and absolute MSE for each activation × spectrum combination.
+  metrics:
+    relu_mean_cv: 0.190
+    gelu_mean_cv: 0.079
+    silu_mean_cv: 0.088
+    tanh_mean_cv: 0.060
+    relu_mean_mse: 0.000183
+    gelu_mean_mse: 0.000067
+    silu_mean_mse: 0.000033
+    tanh_mean_mse: 0.000156
+    silu_vs_relu_mse_improvement: 5.5x
+    relu_kappa100_mse: 0.000317
+    silu_kappa100_mse: 0.000033
+    kappa100_improvement: 9.6x
+    gelu_kappa10_cv: 0.038
+    total_configurations: 96
+  figures:
+  - results/obj-017-activation-rotational-invariance.png
+  conclusions: >
+    The ReLU axis-alignment hypothesis is CONFIRMED. All three smooth activations
+    show dramatically lower rotation sensitivity than ReLU (6-9% mean CV vs 19%).
+    SiLU is the overall winner: best MSE (5.5× better than ReLU) and near-invariant
+    (8.8% CV). At κ=100, SiLU achieves 9.6× better MSE than ReLU — the smooth
+    activation both improves reconstruction quality AND reduces orientation bias.
+    The mechanism is clear: ReLU's element-wise max(0,x) creates boundaries along
+    coordinate hyperplanes, creating preferred directions that interact with channel
+    rotation. Smooth activations (SiLU, GELU, Tanh) don't have this axis bias.
+    Tanh has the lowest CV (6.0%) but worse MSE due to output saturation.
+    Recommendation: switch default activation from ReLU to SiLU.
+  connects_to: null
+  completed_date: '2026-03-16'
