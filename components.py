@@ -9,9 +9,9 @@ class Emitter(nn.Module):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(sound_dim, hidden_dim),
-            nn.ReLU(),
+            nn.SiLU(),
             nn.Linear(hidden_dim, hidden_dim),
-            nn.ReLU(),
+            nn.SiLU(),
             nn.Linear(hidden_dim, action_dim),
         )
 
@@ -119,9 +119,9 @@ class Receiver(nn.Module):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(signal_dim, hidden_dim),
-            nn.ReLU(),
+            nn.SiLU(),
             nn.Linear(hidden_dim, hidden_dim),
-            nn.ReLU(),
+            nn.SiLU(),
             nn.Linear(hidden_dim, sound_dim),
         )
 

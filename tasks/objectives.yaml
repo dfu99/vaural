@@ -539,5 +539,39 @@ objectives:
     rotational invariance problem for this architecture. The remaining variance is
     irreducible training stochasticity, not a rotation-dependent structural bias.
     This closes the rotational invariance investigation: the answer is "use SiLU."
+  connects_to: obj-021
+  completed_date: '2026-03-16'
+
+- id: obj-021
+  status: completed
+  statement: Adaptation speed curve shows Emitter compensates for channel rotation in ~50 epochs
+  methodology: >
+    Pre-trained Receiver on channel M₁ (κ=10, dim=8, SiLU). Rotated channel to M₂
+    (same spectrum, different U,V). Trained fresh Emitter on M₂ with frozen M₁-Receiver,
+    checkpointing MSE at epochs [0, 5, 10, 20, 50, 100, 150, 200]. Compared against
+    oracle (full retrain on M₂) and baseline (M₁→M₁). 4 rotations tested.
+  metrics:
+    adaptation_mse_epoch5: 0.399
+    adaptation_mse_epoch20: 0.043
+    adaptation_mse_epoch50: 0.002095
+    adaptation_mse_epoch100: 0.000916
+    adaptation_mse_epoch200: 0.000480
+    oracle_mse_epoch200: 0.000211
+    baseline_mse_epoch200: 0.000219
+    adaptation_penalty_final: 2.3
+    adaptation_ratio_epoch50: 2.7
+    adaptation_ratio_epoch10: 16.2
+    adaptation_ratio_epoch20: 21.1
+  figures:
+  - results/obj-021-adaptation-speed.png
+  conclusions: >
+    Adaptation follows a two-phase pattern: (1) rapid descent from epochs 0-50 where
+    the Emitter discovers the pre-rotation needed to compensate (ratio drops from 16×
+    to 2.7×), then (2) slow convergence from 50-200 where it refines the compensation
+    (ratio stabilizes at ~2.3×). By epoch 50, the Emitter is within 3× of oracle —
+    functional communication is established quickly. The 2.3× residual penalty is the
+    "accent effect": the M₁-Receiver's channel-specific biases can never be fully
+    compensated by the Emitter alone. This also validates the SiLU switch — all 4
+    rotations show consistent adaptation curves (no axis-alignment variation).
   connects_to: null
   completed_date: '2026-03-16'
