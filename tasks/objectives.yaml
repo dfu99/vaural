@@ -607,5 +607,38 @@ objectives:
     Joint fine-tuning from a warm start is vastly better than joint training from
     scratch. Biological analogy: "accent accommodation" (listener adapting to speaker)
     is most effective when both parties adjust simultaneously.
+  connects_to: obj-023
+  completed_date: '2026-03-16'
+
+- id: obj-023
+  status: completed
+  statement: Mechanistic analysis confirms ReLU kinks cause rotation sensitivity
+  methodology: >
+    For a single trained Receiver, continuously rotated input x(θ) = R(θ)·x in
+    multiple planes and measured output trajectory smoothness. Compared ReLU vs SiLU
+    on the same channel (κ=10, dim=8). Computed total variation, curvature profiles,
+    and kink count (curvature > 3× median) across 10 test inputs × 3 rotation planes.
+  metrics:
+    relu_max_curvature: 19.92
+    silu_max_curvature: 3.49
+    max_curvature_ratio: 5.7
+    relu_kinks_per_trajectory: 18
+    silu_kinks_per_trajectory: 0
+    relu_norm_tv: 6.65
+    silu_norm_tv: 8.15
+    relu_mse: 0.001434
+    silu_mse: 0.000315
+  figures:
+  - results/obj-023-rotation-mechanism.png
+  conclusions: >
+    The mechanism is in the CURVATURE, not total variation. ReLU produces 18 sharp
+    kinks per trajectory (max curvature 5.7× higher) where neurons flip on/off at
+    specific rotation angles. SiLU produces ZERO kinks — perfectly smooth trajectories.
+    The total output variation is actually similar (ReLU slightly less), meaning both
+    networks respond comparably in magnitude but ReLU does so with sharp discontinuities
+    while SiLU varies smoothly. These kinks create orientation-dependent loss landscape
+    features: training converges to different local optima depending on which neurons
+    happen to activate for a given channel rotation. SiLU's smooth landscape has no
+    such orientation-dependent structure, yielding consistent training outcomes.
   connects_to: null
   completed_date: '2026-03-16'

@@ -40,9 +40,9 @@
 - Add early stopping to training loops to avoid wasting compute
 - Consider LR scheduling (cosine annealing or step decay)
 
-## Rotational Invariance Investigation Summary (obj-013 → obj-022)
+## Rotational Invariance Investigation Summary (obj-013 → obj-023)
 
-Ten experiments systematically characterized rotational invariance:
+Eleven experiments systematically characterized rotational invariance:
 
 1. **obj-013**: Channel κ dominates; Receiver inverts (Jacobian ≈ M⁻¹), Emitter ≈ identity
 2. **obj-014**: Joint training reduces channel sensitivity 94% (474× → 28× ill/ortho ratio)
@@ -54,8 +54,10 @@ Ten experiments systematically characterized rotational invariance:
 8. **obj-020**: Residual rotation sensitivity diagnosis — 80% of SiLU's remaining CV is training noise (SGD stochasticity), only 20% is true rotation dependence. Wider networks (h=128, 256) improve MSE but NOT invariance. LayerNorm hurts MSE 6× without improving CV.
 9. **obj-021**: Adaptation speed curve — Emitter reaches functional communication (~2.7× oracle) within 50 epochs. Two-phase pattern: rapid discovery (0-50 epochs, 16×→2.7×) then slow refinement (50-200 epochs, 2.7×→2.3×). The 2.3× residual is the "accent effect."
 10. **obj-022**: Accent accommodation — Joint fine-tuning (warm-started from M₁ Receiver) closes 93% of the accent gap (1.10× oracle). Sequential fine-tuning closes 69% (1.44× oracle). Key insight: joint training from warm start >> joint training from scratch (reconciling obj-018's negative result with obj-011's positive one).
+11. **obj-023**: Mechanistic analysis — ReLU produces 18 kinks per output trajectory (5.7× higher max curvature) where neurons flip at specific rotation angles. SiLU produces 0 kinks. The mechanism: ReLU's binary neuron switching creates orientation-dependent loss landscape features; SiLU's smooth gating has no such structure.
 
 **Key conclusions**: The rotational invariance investigation is **complete**. The full story:
+- **Mechanism**: ReLU creates 18 kinks per trajectory vs 0 for SiLU — binary neuron switching at rotation-dependent angles creates orientation-dependent optimization landscapes
 - **Static invariance**: SiLU activation eliminates rotation sensitivity (CV ~2%, residual is training noise)
 - **Dynamic adaptation**: When channel rotates, Emitter adapts in ~50 epochs to 2.7× oracle (accent effect)
 - **Accent accommodation**: Joint fine-tuning from warm start closes 93% of the gap, reaching 1.10× oracle
@@ -65,6 +67,7 @@ Ten experiments systematically characterized rotational invariance:
 
 ## Recently Completed
 
+- **Rotation mechanism** (obj-023): ReLU has 18 kinks per trajectory (5.7× spikier curvature) vs 0 for SiLU. Binary neuron switching at rotation-dependent angles is the root cause.
 - **Accent accommodation** (obj-022): Joint fine-tuning closes 93% of accent gap (1.10× oracle). Sequential FT closes 69% (1.44×). Joint from warm start >> joint from scratch.
 - **Adaptation speed curve** (obj-021): Emitter reaches functional adaptation in ~50 epochs (2.7× oracle). Two-phase: rapid discovery then slow refinement. Residual 2.3× penalty = "accent effect."
 - **SiLU default switch**: Changed Emitter and Receiver activations from ReLU to SiLU in components.py. All 27 tests pass.
