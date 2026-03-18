@@ -128,3 +128,44 @@ The hypothesis implies joint embedding is necessary for good performance. Vaural
 | INFERNO | 2021 | Computational babbling with RL |
 | Lewis signaling games | Various | Emergent communication theory |
 | Joint ASR/TTS transformers | 2025-26 | Shared parameter generation + perception |
+
+---
+
+## Cross-Project: Sensory-Motor Alignment as Projection Learning
+
+*Cross-posted from WorldNN (2026-03-18). Full formalization in
+`/home2/Documents/code/WorldNN/tasks/research.md`.*
+
+### Connection to vaural
+
+The Emitter learning to map sound tokens → motor actions through a fixed
+random channel (ActionToSignal + Environment) IS learning a sensory-motor
+alignment operator $R$: finding the rotation/scaling that aligns the sound
+embedding with the unknown motor-to-acoustic transform.
+
+- The Receiver is a frozen downstream projection $W_m$
+- The Emitter searches for $R$ such that $W_m R(\mathbf{e}_\text{sound})$
+  reconstructs the input
+- **Coordination quality** $\mathcal{C}_i = \text{cos}(\text{emitter\_output},
+  \text{optimal\_action})$ could predict MSE across channel conditions
+- The rotation invariance findings (obj-013 through obj-024) are directly
+  about how robust $R$ is to rotations of the channel — SiLU reducing
+  sensitivity to ~2% means the learned $R$ generalizes across orientations
+
+### Unified framework (WorldNN ↔ vaural ↔ CorticalNN)
+
+All three projects instantiate the same question: *how does an agent learn
+to act effectively through a lossy, unknown channel?*
+
+| Project | What is R? | What is the channel? | What varies? |
+|---------|-----------|---------------------|-------------|
+| WorldNN | Organism embedding layer | VAE + noise | Capacity (embed_dim), perception quality |
+| vaural | Emitter MLP | ActionToSignal + Environment | Channel rotation, dimension |
+| CorticalNN | 3D growth topology | Sparse connectivity | Growth parameters, depth |
+
+### Prior art
+
+See WorldNN research.md for full assessment. Key overlaps: Friston's FEP,
+CCA/CLIP, Churchland rotational dynamics, BDNF critical periods. The
+synthesis across all three projects may be novel — no single paper combines
+developmental neuroscience, multimodal alignment, and controlled simulation.
