@@ -670,5 +670,38 @@ objectives:
     more directions, reducing the impact of any single axis-alignment. But SiLU still
     consistently wins. This closes the last open question in the rotation invariance
     investigation — the findings generalize to higher dimensions.
-  connects_to: null
+  connects_to: obj-025
   completed_date: '2026-03-16'
+
+- id: obj-025
+  status: completed
+  statement: Coordination quality C_i is near-zero — Emitter does NOT learn optimal action direction
+  methodology: >
+    Computed C_i = cos(emitter(s), M⁻¹·s) across 5 spectra (κ=1,3,10,30,100) × 6
+    rotations = 30 pipelines (Test 1), tracked C_i during adaptation across 8 checkpoints
+    × 4 rotations (Test 2), and decomposed C_i by singular direction (Test 3). All at
+    dim=8, SiLU, 200 recv + 300 emit epochs, 2k samples. Ran on PACE (job 5055141, 17min).
+  metrics:
+    ci_range: [-0.226, 0.244]
+    ci_mean_across_conditions: 0.04
+    r_ci_log_mse: 0.162
+    r_mag_log_mse: 0.685
+    magnitude_ratio_range: [0.45, 0.58]
+    adaptation_ci_final: 0.03
+    per_direction_cv: 7.22
+  figures:
+  - results/obj-025-coordination-quality.png
+  conclusions: >
+    C_i is near-zero across all conditions — the Emitter does NOT learn an action
+    aligned with the theoretical optimal M⁻¹·s. This is consistent with obj-013's
+    finding that the Emitter Jacobian ≈ I (identity), not M⁻¹. The Emitter passes
+    sound through nearly unchanged; the Receiver does the inversion. Cosine alignment
+    (R=0.16) is a poor MSE predictor, but magnitude ratio (R=0.69) is moderate —
+    MSE correlates more with how much signal energy the Emitter produces than with
+    directional alignment. During adaptation, C_i stays near zero even as MSE drops,
+    confirming the Emitter learns a different strategy than optimal pre-compensation.
+    C_i as defined is NOT a useful metric for vaural's sequential training regime.
+    It may work better in WorldNN where the organism must actively encode through a
+    bottleneck, forcing directional alignment.
+  connects_to: null
+  completed_date: '2026-03-19'
