@@ -67,6 +67,7 @@ Eleven experiments systematically characterized rotational invariance:
 
 ## Recently Completed
 
+- **Fixed Receiver** (obj-026): Fixed linear Receiver works (MSE=0.0016); fixed MLP too hard (MSE=0.35). Emitter moves far from identity (J→I dist 36 vs 0.03) but C_i still ≈ 0 because it learns (R·E·A2S)⁻¹, not M⁻¹. The biological "fixed ear" model is viable with a linear transducer.
 - **Coordination quality C_i** (obj-025): C_i ≈ 0 across all conditions — Emitter does NOT align with optimal action M⁻¹·s. Consistent with Emitter ≈ identity (obj-013). Magnitude ratio (R=0.69) is a better predictor than cosine (R=0.16). C_i is not useful for vaural's sequential training; may work in WorldNN's bottleneck regime.
 - **dim=16 validation** (obj-024): SiLU advantage holds at dim=16 (CV 1.9% vs 5.1%, MSE 2.3× better). Both less sensitive at higher dims. No open questions remain.
 - **Rotation mechanism** (obj-023): ReLU has 18 kinks per trajectory (5.7× spikier curvature) vs 0 for SiLU. Binary neuron switching at rotation-dependent angles is the root cause.

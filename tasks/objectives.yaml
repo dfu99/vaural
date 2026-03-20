@@ -703,5 +703,44 @@ objectives:
     C_i as defined is NOT a useful metric for vaural's sequential training regime.
     It may work better in WorldNN where the organism must actively encode through a
     bottleneck, forcing directional alignment.
-  connects_to: null
+  connects_to: obj-026
   completed_date: '2026-03-19'
+
+- id: obj-026
+  status: completed
+  statement: Fixed Receiver forces Emitter away from identity but fails to learn M⁻¹
+  methodology: >
+    Compared 3 Receiver regimes: (1) trained (current default), (2) fixed random MLP
+    (never trained), (3) fixed linear projection (never trained). For each: trained
+    Emitter end-to-end (500 or 1000 epochs), measured MSE, C_i, and Emitter Jacobian
+    distance to M⁻¹ vs identity. dim=8, κ=10, SiLU, 4 rotations. PACE job 5074747.
+  metrics:
+    trained_mse: 0.000029
+    trained_ci: 0.021
+    trained_j_dist_i: 0.030
+    trained_j_dist_minv: 14.603
+    fixed_mlp_mse: 0.351
+    fixed_mlp_ci: -0.040
+    fixed_mlp_j_dist_i: 232.082
+    fixed_mlp_j_dist_minv: 232.986
+    fixed_linear_mse: 0.001594
+    fixed_linear_ci: -0.048
+    fixed_linear_j_dist_i: 35.854
+    fixed_linear_j_dist_minv: 40.228
+  figures:
+  - results/obj-026-fixed-receiver.png
+  conclusions: >
+    Three key findings: (1) Fixed random MLP Receiver is too hard — MSE=0.35, barely
+    better than random. The random MLP's nonlinearities create an inversion problem
+    the Emitter can't solve. (2) Fixed LINEAR Receiver works — MSE=0.0016, only 55×
+    worse than trained. The Emitter successfully learns to invert the combined linear
+    channel (A2S + Env + linear Receiver). (3) C_i stays near zero in ALL regimes —
+    the Emitter does NOT learn M⁻¹ even when forced. Instead it learns (R·E·A2S)⁻¹,
+    the inverse of the FULL pipeline including the fixed Receiver, which is a different
+    transform than M⁻¹. The Emitter Jacobian moves far from identity (J→I dist 36 vs
+    0.03 for trained) confirming it IS learning a non-trivial transform — just not the
+    one C_i measures. The biological insight holds: a fixed "ear" (linear transducer)
+    forces the Emitter to actively encode, but C_i needs to be redefined as
+    cos(emitter(s), (R·E·A2S)⁻¹·s) to capture what the Emitter actually learns.
+  connects_to: null
+  completed_date: '2026-03-20'
