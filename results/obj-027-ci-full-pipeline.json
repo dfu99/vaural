@@ -1,0 +1,86 @@
+{
+  "trained": [
+    {
+      "ci_channel": -0.04093775898218155,
+      "ci_channel_std": 0.3603453040122986,
+      "ci_pipeline": 0.999974250793457,
+      "ci_pipeline_std": 1.62207488756394e-05,
+      "mag_ratio_channel": 0.22431203722953796,
+      "mag_ratio_pipeline": 0.9990816712379456,
+      "mse_to_optimal": 6.727014988427982e-05,
+      "mse": 2.8391272280714475e-05
+    },
+    {
+      "ci_channel": 0.053813230246305466,
+      "ci_channel_std": 0.3708687126636505,
+      "ci_pipeline": 0.9999735951423645,
+      "ci_pipeline_std": 1.623402931727469e-05,
+      "mag_ratio_channel": 0.2239135205745697,
+      "mag_ratio_pipeline": 0.9991461634635925,
+      "mse_to_optimal": 7.053497392917052e-05,
+      "mse": 2.7208552637603134e-05
+    },
+    {
+      "ci_channel": -0.15679870545864105,
+      "ci_channel_std": 0.3278712034225464,
+      "ci_pipeline": 0.9999619722366333,
+      "ci_pipeline_std": 2.2078436813899316e-05,
+      "mag_ratio_channel": 0.22343389689922333,
+      "mag_ratio_pipeline": 0.9991042017936707,
+      "mse_to_optimal": 9.429329656995833e-05,
+      "mse": 2.8409667720552534e-05
+    },
+    {
+      "ci_channel": 0.22744283080101013,
+      "ci_channel_std": 0.3438189923763275,
+      "ci_pipeline": 0.9999740123748779,
+      "ci_pipeline_std": 1.425849950464908e-05,
+      "mag_ratio_channel": 0.22233103215694427,
+      "mag_ratio_pipeline": 0.9998103976249695,
+      "mse_to_optimal": 7.099331560311839e-05,
+      "mse": 3.094713974860497e-05
+    }
+  ],
+  "fixed_linear": [
+    {
+      "ci_channel": -0.05850604921579361,
+      "ci_channel_std": 0.40418338775634766,
+      "ci_pipeline": 0.9999887943267822,
+      "ci_pipeline_std": 2.8732094506267458e-05,
+      "mag_ratio_channel": 1.4760704040527344,
+      "mag_ratio_pipeline": 1.0008846521377563,
+      "mse_to_optimal": 0.0012865428579971194,
+      "mse": 9.640702774049714e-05
+    },
+    {
+      "ci_channel": 0.10619960725307465,
+      "ci_channel_std": 0.5006079077720642,
+      "ci_pipeline": 0.9999908208847046,
+      "ci_pipeline_std": 1.6924517694860697e-05,
+      "mag_ratio_channel": 1.0070552825927734,
+      "mag_ratio_pipeline": 1.0002881288528442,
+      "mse_to_optimal": 0.0005134899984113872,
+      "mse": 0.00010116634075529873
+    },
+    {
+      "ci_channel": -0.0667535737156868,
+      "ci_channel_std": 0.484690397977829,
+      "ci_pipeline": 0.9999831914901733,
+      "ci_pipeline_std": 5.4757379984948784e-05,
+      "mag_ratio_channel": 2.5082218647003174,
+      "mag_ratio_pipeline": 1.000268816947937,
+      "mse_to_optimal": 0.004291817080229521,
+      "mse": 0.00012328488810453564
+    },
+    {
+      "ci_channel": -0.1726551502943039,
+      "ci_channel_std": 0.4714541435241699,
+      "ci_pipeline": 0.9998986721038818,
+      "ci_pipeline_std": 0.0003419621498323977,
+      "mag_ratio_channel": 4.658804893493652,
+      "mag_ratio_pipeline": 0.9760848879814148,
+      "mse_to_optimal": 0.6187841892242432,
+      "mse": 0.006056891288608313
+    }
+  ]
+}

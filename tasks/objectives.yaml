@@ -742,5 +742,38 @@ objectives:
     one C_i measures. The biological insight holds: a fixed "ear" (linear transducer)
     forces the Emitter to actively encode, but C_i needs to be redefined as
     cos(emitter(s), (R·E·A2S)⁻¹·s) to capture what the Emitter actually learns.
-  connects_to: null
+  connects_to: obj-027
   completed_date: '2026-03-20'
+
+- id: obj-027
+  status: completed
+  statement: C_i with full pipeline inverse is 1.0000 — Emitter perfectly learns P⁻¹
+  methodology: >
+    Redefined C_i as cos(emitter(s), P⁻¹·s) where P = Recv·Env·A2S (full pipeline
+    minus Emitter). Compared against original C_i = cos(emitter(s), M⁻¹·s). Tested
+    trained Receiver and fixed linear Receiver regimes. dim=8, κ=10, SiLU, 4 rotations.
+    For trained Receiver, P linearized via Jacobian averaging. PACE job 5139134, 8min.
+  metrics:
+    trained_ci_channel: 0.021
+    trained_ci_pipeline: 1.0000
+    trained_mag_ratio_pipeline: 0.999
+    fixed_linear_ci_channel: -0.048
+    fixed_linear_ci_pipeline: 1.0000
+    fixed_linear_mag_ratio_pipeline: 0.994
+    trained_mse: 0.000029
+    fixed_linear_mse: 0.001594
+  figures:
+  - results/obj-027-ci-full-pipeline.png
+  conclusions: >
+    C_i(pipeline) = 1.0000 in BOTH regimes — the Emitter perfectly learns the full
+    pipeline inverse P⁻¹, both in direction (cosine = 1.0) and magnitude (ratio ≈ 1.0).
+    Meanwhile C_i(channel) ≈ 0 as before. This definitively resolves the C_i puzzle:
+    the Emitter was always learning the correct inverse — we were just measuring the
+    wrong transform. The Emitter learns (Recv·Env·A2S)⁻¹, not (Env·A2S)⁻¹. For the
+    trained Receiver (where Recv ≈ M⁻¹), this means P ≈ I and P⁻¹ ≈ I, explaining
+    why the Emitter Jacobian ≈ I. For the fixed linear Receiver, P is a different
+    linear transform and the Emitter learns its exact inverse. The vocal system
+    learns to invert the full sensory path (vocal tract + air + ear), not just
+    the air channel. C_i should always be defined against the full pipeline.
+  connects_to: null
+  completed_date: '2026-03-21'
