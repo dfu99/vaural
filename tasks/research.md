@@ -169,3 +169,132 @@ See WorldNN research.md for full assessment. Key overlaps: Friston's FEP,
 CCA/CLIP, Churchland rotational dynamics, BDNF critical periods. The
 synthesis across all three projects may be novel — no single paper combines
 developmental neuroscience, multimodal alignment, and controlled simulation.
+
+---
+
+## Literature Assessment: Full-Pipeline Inverse and Variant/Invariant Decomposition (2026-03-22)
+
+*Motivated by obj-025 → obj-027 finding: C_i(pipeline) = 1.0000.*
+
+### The core finding, formally
+
+In a pipeline P = Receiver ∘ Environment ∘ ActionToSignal, the Emitter
+converges to P⁻¹ (full pipeline inverse), NOT to M⁻¹ = (Env ∘ A2S)⁻¹
+(channel-only inverse). When the Receiver is pre-trained, it absorbs
+channel inversion, so P ≈ I and the Emitter learns identity. When the
+Receiver is a fixed linear transducer, the Emitter learns the non-trivial
+composite inverse.
+
+### Named precedents for the decomposition
+
+**Adaptive Inverse Control (Widrow & Walach, 1996)**
+The closest classical precedent. An adaptive filter in series with an
+unknown plant converges to the plant's inverse transfer function. Proven
+for linear plants. However, Widrow's canonical setup treats the plant as
+input→output without a downstream sensor/decoder inside the inversion
+loop. Our "full pipeline" framing — where the sensor is inside the loop —
+is not the standard exposition. *Must cite to avoid embarrassment.*
+
+**Separation Principle (linear control theory)**
+Observer design and state-feedback design can be done independently. The
+Receiver acts as a state observer; the Emitter is the controller. For
+nonlinear systems (our MLPs), the separation principle does not generally
+hold (Maggiore & Passino, IEEE TAC 2003).
+
+**Operational Space Control (Khatib, 1987)**
+Decomposes robot control into a kinematic chain (plant dynamics) and a
+task-space mapping (sensor-like projection). The controller in task space
+inverts the full chain. This is our decomposition in robotics form.
+
+**Internal Models (Wolpert & Kawato, Neural Networks 1998)**
+The "controlled object" is explicitly a cascade: neural command → joint
+torques → limb kinematics → task-space position. The cerebellar inverse
+model absorbs the kinematic sensor model — i.e., it inverts the FULL
+pipeline. *This IS our finding in biological form.* Our contribution:
+measuring convergence quantitatively (C_i = 1.0 vs ≈0 counterfactual)
+and showing identity collapse when the decoder absorbs channel inversion.
+
+### Communications systems — closest technical analogue
+
+**O'Shea & Hoydis (IEEE TCCN 2017, arXiv:1702.00832)**
+Model communications as autoencoder: encoder (transmitter) → channel →
+decoder (receiver). ~1400 citations. Structurally identical to our
+pipeline. BUT they train encoder and decoder jointly from random init.
+They do NOT study: (a) pre-trained-then-frozen decoder, (b) whether
+encoder converges to (decoder ∘ channel)⁻¹ vs channel⁻¹, (c) the
+C_i measurement.
+
+**Dörner et al. (IEEE JSPS 2018, arXiv:1707.03384)**
+Same architecture over real radio channels. Same gap.
+
+### Cross-embodiment robotics — the practical implication
+
+**CrossFormer (Doshi et al., RSS 2024)**
+900K trajectories, 30 embodiments. Shared transformer backbone +
+per-embodiment action heads. The shared trunk = invariant channel model;
+per-embodiment head = variant actuator model. *This IS our decomposition
+at scale, but not articulated theoretically.*
+
+**Octo (Ghosh et al., RSS 2024)**
+Modality-specific tokenizers (embodiment-specific) feeding a shared
+transformer (channel-invariant). Same implicit structure.
+
+**GR00T N1 (NVIDIA, arXiv:2503.14734, 2025)**
+Dual-system VLA with embodiment-aware state/action encoder (System 1)
+and shared VLM backbone (System 2). Explicitly per-embodiment encoders
+on a shared trunk. Our decomposition is the theoretical backbone — the
+paper doesn't provide formal justification.
+
+**AnyMorph (Trabucco et al., ICML 2022, arXiv:2206.12279)**
+Morphology-agnostic transformer policy. Doesn't separate channel from
+actuator theoretically.
+
+### Novelty assessment
+
+| Claim | Status |
+|-------|--------|
+| Controller converges to plant inverse | Well-known (Widrow 1993) |
+| Emitter-channel-receiver as autoencoder | Well-known (O'Shea/Hoydis 2017) |
+| Full pipeline is the correct inversion target | Implicit in Wolpert/Kawato 1998, not measured |
+| C_i = 1.0 vs ≈ 0 for pipeline vs channel | **Novel measurement** |
+| Pre-trained frozen decoder → emitter identity | **Novel regime, not studied** |
+| Fixed linear decoder → emitter learns (R·M)⁻¹ | **Novel, shown in obj-026/027** |
+| Invariant-channel / variant-actuator decomposition | Named implicitly by CrossFormer/GR00T, **not formalized** |
+| Two-phase training as developmental asymmetry | Partially in DIVA, not in ML robotics |
+
+### What is expensive in physical AI training
+
+The expensive component is the **perception-to-action mapping** — the
+policy/world model that maps sensor observations to motor commands.
+Training this end-to-end requires massive real-world or simulated
+interaction data. The variant/invariant decomposition suggests:
+
+- **Invariant (transferable)**: Environment dynamics, physics models,
+  shared perception backbones — train once, reuse across embodiments
+- **Variant (retrain per robot)**: Actuator-specific encoders/decoders,
+  morphology-specific action heads — lightweight, fast to adapt
+
+This is exactly what CrossFormer/Octo/GR00T N1 do in practice. Our
+contribution: the formal justification via the full-pipeline inverse
+result.
+
+### Recommended academic framing
+
+Position as: "Sequential training in learned communication systems reveals
+that controllers converge to full-pipeline inverse, not channel inverse.
+This provides formal justification for the shared-trunk / per-embodiment-
+head architecture used in cross-embodiment robot learning (CrossFormer,
+GR00T N1), and predicts when controller adaptation is trivial (pre-trained
+decoder) vs non-trivial (fixed transducer)."
+
+### Must-cite references
+
+| Ref | Year | Why |
+|-----|------|-----|
+| Widrow & Walach, "Adaptive Inverse Control" | 1996 | Classical precedent, must cite |
+| O'Shea & Hoydis, arXiv:1702.00832 | 2017 | Structural analogue in comms |
+| Wolpert & Kawato, Neural Networks | 1998 | Biological full-pipeline inverse |
+| Khatib, IEEE RA | 1987 | Operational space = our decomposition |
+| CrossFormer, RSS 2024 | 2024 | Implicit use of our decomposition |
+| GR00T N1, arXiv:2503.14734 | 2025 | Same, at scale |
+| Guenther, DIVA model | 2006+ | Vocal tract = our pipeline |
