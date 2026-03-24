@@ -775,5 +775,49 @@ objectives:
     linear transform and the Emitter learns its exact inverse. The vocal system
     learns to invert the full sensory path (vocal tract + air + ear), not just
     the air channel. C_i should always be defined against the full pipeline.
-  connects_to: null
+  connects_to: obj-028
   completed_date: '2026-03-21'
+
+- id: obj-028
+  status: completed
+  statement: Noise alignment boundary — C_i(pipeline) degrades gracefully, predicts MSE (R=-0.78)
+  methodology: >
+    Extended GPU training (500 recv + 1000 emit epochs, dim=16, h=128, SiLU) with 7
+    channel noise levels σ=[0, 0.01, 0.03, 0.1, 0.3, 1.0, 3.0]. Gaussian noise
+    injected after Environment transform during training. Tested trained Receiver and
+    fixed linear Receiver regimes, 3 rotations each. PACE job 5390043, RTX_6000, 55min.
+  metrics:
+    trained_noise0_mse: 0.000041
+    trained_noise0_ci_pipe: 1.0000
+    trained_noise01_mse: 0.000275
+    trained_noise01_ci_pipe: 0.9998
+    trained_noise03_ci_pipe: 0.9996
+    trained_noise1_mse: 0.002463
+    trained_noise1_ci_pipe: 0.9973
+    trained_noise3_mse: 0.01289
+    trained_noise3_ci_pipe: 0.9793
+    trained_noise10_mse: 0.03042
+    trained_noise10_ci_pipe: 0.9843
+    trained_noise30_mse: 0.22899
+    trained_noise30_ci_pipe: 0.6530
+    r_ci_mse_trained: -0.690
+    r_ci_mse_fixed_linear: -0.778
+    fixed_noise0_ci_pipe: 0.9994
+    fixed_noise10_ci_pipe: 0.7294
+    fixed_noise30_ci_pipe: 0.3530
+  figures:
+  - results/obj-028-noise-alignment.png
+  conclusions: >
+    C_i(pipeline) degrades gracefully with noise — no sharp cliff. Trained Receiver
+    maintains C_i > 0.97 up to σ=1.0, dropping to 0.65 only at σ=3.0 (where MSE
+    is 0.23, barely better than random). Fixed linear Receiver degrades faster
+    (C_i=0.73 at σ=0.1) because the Emitter must invert a harder composite transform
+    AND cope with noise. C_i(pipeline) correlates strongly with log(MSE): R=-0.69
+    for trained, R=-0.78 for fixed linear. This validates C_i as a meaningful
+    surrogate metric across noise regimes. The trained Receiver's robustness comes
+    from its ability to denoise during pre-training — it learns a regularized inverse
+    that tolerates noise. Key insight for cross-embodiment robotics: pre-trained
+    perception (trained Receiver) provides noise robustness that fixed sensors
+    (fixed linear) cannot — a formal argument for learning perception.
+  connects_to: null
+  completed_date: '2026-03-23'

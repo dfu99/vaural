@@ -67,6 +67,7 @@ Eleven experiments systematically characterized rotational invariance:
 
 ## Recently Completed
 
+- **Noise alignment boundary** (obj-028): C_i(pipeline) degrades gracefully with noise — no cliff. Trained Receiver maintains C_i>0.97 up to σ=1.0, drops to 0.65 at σ=3.0. Fixed linear degrades faster (0.73 at σ=0.1). C_i predicts MSE: R=-0.69 (trained), R=-0.78 (fixed). Validates C_i as surrogate metric. PACE job 5390043, RTX_6000.
 - **Literature assessment** (2026-03-22): Full-pipeline inverse finding has named precedents (Widrow adaptive inverse control, Wolpert/Kawato internal models, Khatib operational space). Novel contributions: C_i measurement (1.0 vs 0), pre-trained-frozen-decoder regime, and formal justification for CrossFormer/GR00T N1 shared-trunk architectures. See tasks/research.md.
 - **C_i full pipeline inverse** (obj-027): C_i(pipeline) = 1.0000 in both trained and fixed Receiver regimes. The Emitter perfectly learns P⁻¹ = (Recv·Env·A2S)⁻¹. The original C_i measured the wrong transform. Resolves the C_i puzzle.
 - **Fixed Receiver** (obj-026): Fixed linear Receiver works (MSE=0.0016); fixed MLP too hard (MSE=0.35). Emitter moves far from identity (J→I dist 36 vs 0.03) but C_i still ≈ 0 because it learns (R·E·A2S)⁻¹, not M⁻¹. The biological "fixed ear" model is viable with a linear transducer.

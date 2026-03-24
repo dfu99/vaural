@@ -69,7 +69,151 @@ queue:
 - objective: investigate this research problem from the point of view of rotational
     invariance
   priority: 3
-  status: in_progress
+  status: completed
   added: 2026-03-12 15:06
   source: slack
   started: 2026-03-13 02:19
+  completed: 2026-03-16 12:41
+  commits: 15
+  notes: Auto-completed via 15 commit(s).
+- objective: check on job <tel:5055141|5055141>
+  priority: 3
+  status: completed
+  added: 2026-03-19 09:34
+  source: slack
+  channel_id: C0AKWNYUE7N
+  started: 2026-03-19 09:35
+  completed: 2026-03-19 09:38
+  commits: 1
+  notes: Auto-completed via slack_staged.
+- objective: check on <tel:5139134|5139><tel:5139134|134>
+  priority: 3
+  status: completed
+  added: 2026-03-21 11:37
+  source: slack
+  channel_id: C0AKWNYUE7N
+  started: 2026-03-21 11:38
+  completed: 2026-03-21 11:39
+  commits: 1
+  notes: Auto-completed via slack_staged.
+- objective: escalate into a literature search to verify the novelty of our work and
+    rigorously test whether our results are trivial. Does this have structural insight
+    on perhaps how the architecture of physical AI should be distributed? How is physical
+    AI actuated now? is there a clearly expensive, memory or compute-intensive or
+    training-intensive component that would actually benefit from essentially decomposing
+    the problem into identifying the variant and invariant components of the problem?
+    Perhaps, what parts are translateable between robots to speed up training once
+    you've already done it once? Does this decomposition already have name in robotics
+    or linear algebra or control theory? We must now move to expert, academically
+    respectable framing, despite being an AI, to not be ridiculed in the public court
+    of academics.
+  priority: 3
+  status: completed
+  added: 2026-03-22 16:24
+  source: slack
+  channel_id: C0AKWNYUE7N
+  started: 2026-03-22 16:25
+  completed: 2026-03-22 16:33
+  commits: 1
+  notes: Auto-completed via slack_staged.
+- objective: 'PACE TASK: Submit extended training runs for the emitter-receiver alignment
+    system. Train with varying channel noise levels to characterize the alignment
+    boundary. This connects to WorldNN C_i metric — cross-validate whether C_i predicts
+    success in the vaural setting too. Use RTX_6000. Report via Slack.'
+  priority: 1
+  status: completed
+  added: 2026-03-23 03:13
+  source: pace-burn
+  started: 2026-03-23 03:14
+  completed: 2026-03-23 03:18
+  notes: 'PACE job 5390043 submitted (RTX_6000): noise alignment boundary experiment
+    (obj-028).
+
+    7 noise levels × 2 regimes × 3 rotations = 42 extended training runs at dim=16.
+
+    Experiment script: experiments/noise_alignment_boundary.py
+
+    SLURM script: scripts/pace_noise_alignment.sh
+
+    Results will land in ~/scratch/vaural/results/obj-028-*'
+- objective: '[AFK PLAN] Break conference paper goal into 8 tasks.'
+  priority: 3
+  status: completed
+  added: 2026-03-24 03:42
+  source: afk
+  started: 2026-03-24 03:43
+  completed: 2026-03-24 04:00
+  notes: Planned 8 tasks for conference paper polishing.
+- objective: 'Task 1/8: Fetch and log obj-028 noise alignment results.'
+  priority: 3
+  status: completed
+  added: 2026-03-24 04:00
+  source: afk
+  started: 2026-03-24 03:47
+  completed: 2026-03-24 04:12
+- objective: 'Task 2/8: Write paper draft outline. Create paper/outline.md with standard
+    conference structure: Abstract, Introduction, Related Work, Method, Experiments,
+    Results, Discussion, Conclusion. Fill each section with 2-3 bullet points of what
+    goes there based on obj-013→028 findings and the literature assessment in tasks/research.md.
+    Target venue: ICML or NeurIPS workshop. Success: paper/outline.md exists with
+    all sections populated.'
+  priority: 3
+  status: pending
+  added: 2026-03-24 04:00
+  source: afk
+- objective: 'Task 3/8: Write Method section. Create paper/method.md describing the
+    pipeline architecture, two-phase training, SVD channel decomposition, C_i metric
+    (both channel and pipeline variants), and the fixed-receiver regime. Use formal
+    notation consistent with Widrow/Wolpert citations. Include pipeline diagram in
+    ASCII. Success: paper/method.md with formal math, ~1500 words.'
+  priority: 3
+  status: pending
+  added: 2026-03-24 04:00
+  source: afk
+- objective: 'Task 4/8: Write Experiments and Results section. Create paper/experiments.md
+    covering: (1) rotation invariance arc summary (obj-013→024), (2) C_i pipeline
+    inverse finding (obj-025→027), (3) fixed receiver regime (obj-026), (4) noise
+    alignment boundary (obj-028). Organize as numbered experiments with hypothesis,
+    setup, result, interpretation. Reference all figures. Success: paper/experiments.md
+    with 4 experiment blocks, ~2000 words.'
+  priority: 3
+  status: pending
+  added: 2026-03-24 04:00
+  source: afk
+- objective: 'Task 5/8: Write Related Work section. Create paper/related_work.md positioning
+    our work against: Widrow adaptive inverse control, Wolpert/Kawato internal models,
+    O''Shea/Hoydis learned communications, CrossFormer/GR00T N1 cross-embodiment,
+    Guenther DIVA model. Clearly state what is novel vs known. Success: paper/related_work.md
+    with 6+ cited works, ~1000 words.'
+  priority: 3
+  status: pending
+  added: 2026-03-24 04:00
+  source: afk
+- objective: 'Task 6/8: Write Introduction and Abstract. Create paper/intro.md with
+    a compelling narrative: unknown channels, two-phase training, the surprise (C_i
+    channel ≈ 0 but C_i pipeline = 1.0), the mechanism (SiLU kinks), and the practical
+    implication (cross-embodiment robotics). Write a 150-word abstract. Success: paper/intro.md
+    with abstract and ~800 word introduction.'
+  priority: 3
+  status: pending
+  added: 2026-03-24 04:00
+  source: afk
+- objective: 'Task 7/8: Generate publication-quality figures. Create 4-5 clean figures
+    suitable for a conference paper: (1) architecture diagram, (2) rotation invariance
+    summary (SiLU vs ReLU), (3) C_i channel vs pipeline comparison, (4) noise alignment
+    boundary, (5) adaptation speed curve. Save to paper/figures/. Use consistent style
+    (no titles, proper axis labels, legend placement). Success: paper/figures/ contains
+    4+ publication-ready PNGs.'
+  priority: 3
+  status: pending
+  added: 2026-03-24 04:00
+  source: afk
+- objective: 'Task 8/8: Assemble full paper draft. Create paper/draft.md combining
+    all sections (intro, related work, method, experiments, conclusion) into a single
+    coherent document. Add Discussion section analyzing limitations (dim=8/16 only,
+    linear channels, no real audio). Add Conclusion with 3 key contributions. Check
+    all cross-references. Success: paper/draft.md is a complete, readable draft.'
+  priority: 3
+  status: pending
+  added: 2026-03-24 04:00
+  source: afk
