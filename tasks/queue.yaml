@@ -158,18 +158,59 @@ queue:
     Target venue: ICML or NeurIPS workshop. Success: paper/outline.md exists with
     all sections populated.'
   priority: 3
-  status: pending
+  status: completed
   added: 2026-03-24 04:00
   source: afk
+  started: 2026-03-24 03:48
+  completed: 2026-03-24 03:50
+  commits: 2
+  notes: 'Task 2/8 complete: paper/outline.md written and committed (b50e9d9).
+
+
+    Created comprehensive conference paper outline with:
+
+    - 3 working title options
+
+    - 6 sections with bullet-point content maps
+
+    - 5 planned figures
+
+    - Key metrics table for abstract/intro
+
+    - Target venue: ICML 2027 or NeurIPS 2026 Workshop
+
+
+    Next: Task 3/8 — Write Method section (paper/method.md).'
 - objective: 'Task 3/8: Write Method section. Create paper/method.md describing the
     pipeline architecture, two-phase training, SVD channel decomposition, C_i metric
     (both channel and pipeline variants), and the fixed-receiver regime. Use formal
     notation consistent with Widrow/Wolpert citations. Include pipeline diagram in
     ASCII. Success: paper/method.md with formal math, ~1500 words.'
   priority: 3
-  status: pending
+  status: completed
   added: 2026-03-24 04:00
   source: afk
+  started: 2026-03-24 03:50
+  completed: 2026-03-24 03:51
+  commits: 2
+  notes: 'Task 3/8 complete: paper/method.md written and committed (8fa2517).
+
+
+    8 subsections with formal math notation:
+
+    - 3.1 Pipeline Architecture (f_θ, M, g_φ, loss function)
+
+    - 3.2 SVD Channel Parameterization (U, Σ, V^T, condition number κ)
+
+    - 3.3 Two-Phase Sequential Training (developmental asymmetry)
+
+    - 3.4 Full-Pipeline Transform (P = g_φ ∘ M, P⁻¹ analysis)
+
+    - 3.5 Fixed Receiver Regime (biological "ear" model)
+
+    - 3.6 Coordination Quality C_i (channel vs pipeline variants)
+
+    - 3.7 Rotation Invariance Proto'
 - objective: 'Task 4/8: Write Experiments and Results section. Create paper/experiments.md
     covering: (1) rotation invariance arc summary (obj-013→024), (2) C_i pipeline
     inverse finding (obj-025→027), (3) fixed receiver regime (obj-026), (4) noise
@@ -177,27 +218,76 @@ queue:
     setup, result, interpretation. Reference all figures. Success: paper/experiments.md
     with 4 experiment blocks, ~2000 words.'
   priority: 3
-  status: pending
+  status: completed
   added: 2026-03-24 04:00
   source: afk
+  started: 2026-03-24 03:51
+  completed: 2026-03-24 03:53
+  commits: 2
+  notes: 'Task 4/8 complete: paper/experiments.md committed (b47fad4).
+
+
+    4 experiment blocks, each with hypothesis/setup/result/interpretation:
+
+    - 4.1 Rotation invariance: SiLU CV 2% vs ReLU 19%, kink mechanism (18 vs 0)
+
+    - 4.2 Full-pipeline inverse: C_i(pipeline) = 1.0 vs C_i(channel) ≈ 0
+
+    - 4.3 Fixed receiver: linear transducer works (MSE=0.0016), MLP fails (MSE=0.35)
+
+    - 4.4 Noise boundary: graceful degradation, R=-0.78 correlation
+
+
+    ~1400 words. Next: Task 5/8 — Related Work section.'
 - objective: 'Task 5/8: Write Related Work section. Create paper/related_work.md positioning
     our work against: Widrow adaptive inverse control, Wolpert/Kawato internal models,
     O''Shea/Hoydis learned communications, CrossFormer/GR00T N1 cross-embodiment,
     Guenther DIVA model. Clearly state what is novel vs known. Success: paper/related_work.md
     with 6+ cited works, ~1000 words.'
   priority: 3
-  status: pending
+  status: completed
   added: 2026-03-24 04:00
   source: afk
+  started: 2026-03-24 03:53
+  completed: 2026-03-24 03:54
+  commits: 2
+  notes: 'Task 5/8 complete: paper/related_work.md committed (19184ea).
+
+
+    5 subsections covering:
+
+    - Adaptive Inverse Control (Widrow, separation principle)
+
+    - Internal Models (Wolpert/Kawato, MOSAIC)
+
+    - Speech Acquisition (DIVA/Guenther)
+
+    - Learned Communications (O''Shea/Hoydis, Dörner)
+
+    - Cross-Embodiment Robotics (CrossFormer, Octo, GR00T N1, AnyMorph)
+
+    Plus novelty summary table. 10+ citations, ~1000 words.
+
+
+    Next: Task 6/8 — Introduction and Abstract.'
 - objective: 'Task 6/8: Write Introduction and Abstract. Create paper/intro.md with
     a compelling narrative: unknown channels, two-phase training, the surprise (C_i
     channel ≈ 0 but C_i pipeline = 1.0), the mechanism (SiLU kinks), and the practical
     implication (cross-embodiment robotics). Write a 150-word abstract. Success: paper/intro.md
     with abstract and ~800 word introduction.'
   priority: 3
-  status: pending
+  status: completed
   added: 2026-03-24 04:00
   source: afk
+  started: 2026-03-24 03:54
+  completed: 2026-03-24 03:55
+  commits: 2
+  notes: "Task 6/8 complete: paper/intro.md committed (17e0e29).\n\n- ~150-word abstract\
+    \ covering all key results\n- ~750-word introduction with narrative arc:\n  speaker/listener\
+    \ through unknown channel → naive expectation →\n  surprise (C_i channel ≈ 0,\
+    \ pipeline = 1.0) → fixed receiver validation →\n  SiLU kink mechanism → noise\
+    \ boundary → cross-embodiment implication\n- 3 numbered contributions\n\nNext:\
+    \ Task 7/8 — Publication-quality figures."
 - objective: 'Task 7/8: Generate publication-quality figures. Create 4-5 clean figures
     suitable for a conference paper: (1) architecture diagram, (2) rotation invariance
     summary (SiLU vs ReLU), (3) C_i channel vs pipeline comparison, (4) noise alignment
@@ -205,15 +295,80 @@ queue:
     (no titles, proper axis labels, legend placement). Success: paper/figures/ contains
     4+ publication-ready PNGs.'
   priority: 3
-  status: pending
+  status: completed
   added: 2026-03-24 04:00
   source: afk
+  started: 2026-03-24 03:55
+  completed: 2026-03-24 03:58
+  commits: 2
+  notes: 'Task 7/8 complete: 5 publication-quality figures committed (12b871d).
+
+
+    paper/figures/ contains PNG + PDF for each:
+
+    - fig1_architecture: Pipeline diagram with two-phase training
+
+    - fig2_rotation: SiLU vs ReLU CV bars + curvature kink profiles
+
+    - fig3_ci_contrast: C_i channel (~0) vs pipeline (1.0) + Jacobian distances
+
+    - fig4_noise: Noise alignment boundary (C_i and MSE vs σ)
+
+    - fig5_adaptation: Speed curve + accent accommodation strategies
+
+
+    Consistent style: serif font, no titles, proper axis labels'
 - objective: 'Task 8/8: Assemble full paper draft. Create paper/draft.md combining
     all sections (intro, related work, method, experiments, conclusion) into a single
     coherent document. Add Discussion section analyzing limitations (dim=8/16 only,
     linear channels, no real audio). Add Conclusion with 3 key contributions. Check
     all cross-references. Success: paper/draft.md is a complete, readable draft.'
   priority: 3
-  status: pending
+  status: completed
   added: 2026-03-24 04:00
   source: afk
+  started: 2026-03-24 03:58
+  completed: 2026-03-24 04:04
+  commits: 2
+  notes: 'AFK_COMPLETE
+
+
+    All 8/8 tasks for conference paper polishing are done.
+
+
+    Commits:
+
+    - 9304a22: obj-028 noise results + AFK plan
+
+    - b50e9d9: paper/outline.md
+
+    - 8fa2517: paper/method.md (~1200 words, formal math)
+
+    - b47fad4: paper/experiments.md (~1400 words, 4 experiment blocks)
+
+    - 19184ea: paper/related_work.md (~1000 words, 10+ citations)
+
+    - 17e0e29: paper/intro.md (~900 words, abstract + intro)
+
+    - 12b871d: 5 publication figures (PNG+PDF)
+
+    - 4b355a8: paper/draft.md (complete 5700-word draft)
+
+
+    The paper is'
+- objective: Ask the Head Scientist for a review first.
+  priority: 3
+  status: completed
+  added: 2026-03-27 12:22
+  source: slack
+  channel_id: C0AKWNYUE7N
+  started: 2026-03-27 12:25
+  completed: 2026-03-27 12:25
+  notes: Auto-completed via slack_staged.
+- objective: organize commits and push
+  priority: 3
+  status: in_progress
+  added: 2026-03-28 02:28
+  source: slack
+  channel_id: C0AKWNYUE7N
+  started: 2026-03-28 02:29
