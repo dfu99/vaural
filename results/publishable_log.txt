@@ -1,0 +1,77 @@
+
+============================================================
+EXP 1: PARAM-COUNT ABLATION
+============================================================
+  seed=42...
+  seed=43...
+  seed=44...
+  sequential          : MSE=0.000037±0.000005, thresh=10±0 ep, params=5256
+  joint               : MSE=0.000117±0.000073, thresh=203±83 ep, params=5256
+  joint_matched       : MSE=0.393715±0.017499, thresh=1001±0 ep, params=5256
+  [checkpoint saved: results/pub_exp1.json]
+
+============================================================
+EXP 2: MULTI-SEED SCALING
+============================================================
+
+  dim=8, hidden=64, epochs=1000
+    seed=42... seq=0.000038, jnt=0.000038
+    seed=43... seq=0.000030, jnt=0.000099
+    seed=44... seq=0.000043, jnt=0.000213
+    sequential dim=8: MSE=0.000037±0.000005, thresh=10±0
+    joint dim=8: MSE=0.000117±0.000073, thresh=203±83
+
+  dim=16, hidden=128, epochs=1500
+    seed=42... seq=0.127200, jnt=0.079809
+    seed=43... seq=0.155619, jnt=0.081719
+    seed=44... seq=0.150502, jnt=0.074243
+    sequential dim=16: MSE=0.144440±0.012369, thresh=1501±0
+    joint dim=16: MSE=0.078591±0.003171, thresh=1501±0
+  [checkpoint saved: results/pub_exp2.json]
+
+============================================================
+EXP 3: STRUCTURED CHANNELS
+============================================================
+
+  Channel: random
+    Sequential: thresh=10±0, MSE=0.000037
+    Joint:      thresh=203±83, MSE=0.000117
+    Speedup: 20.3×
+
+  Channel: noisy_0.1
+    Sequential: thresh=1001±0, MSE=0.069928
+    Joint:      thresh=550±326, MSE=0.003546
+    Speedup: 0.5×
+
+  Channel: noisy_0.5
+    Sequential: thresh=1001±0, MSE=0.204356
+    Joint:      thresh=854±208, MSE=0.009359
+    Speedup: 0.9×
+
+  Channel: ill_cond_100
+    Sequential: thresh=10±0, MSE=0.000055
+    Joint:      thresh=60±14, MSE=0.000143
+    Speedup: 6.0×
+
+  Channel: bandlimited_4
+    Sequential: thresh=1001±0, MSE=0.601742
+    Joint:      thresh=1001±0, MSE=0.367529
+    Speedup: 1.0×
+  [checkpoint saved: results/pub_exp3.json]
+
+============================================================
+EXP 4: GRADIENT CONFLICT
+============================================================
+  Early cos_sim (ep 5-25): -0.0070
+  Mid cos_sim (ep 100-200): -0.0011
+  Late cos_sim (ep 400-500): -0.0042
+
+=== GENERATING FIGURES ===
+Saved figures/pub_param_ablation.png
+Saved figures/pub_multiseed_scaling.png
+Saved figures/pub_structured_channels.png
+Saved figures/pub_gradient_conflict.png
+
+Total time: 62.5 minutes
+Results: results/publishable.json
+Figures: ['figures/pub_param_ablation.png', 'figures/pub_multiseed_scaling.png', 'figures/pub_structured_channels.png', 'figures/pub_gradient_conflict.png']

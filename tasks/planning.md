@@ -2,13 +2,14 @@
 
 ## Current Priorities
 
-1. **Structured input for VQ** — Random continuous inputs don't benefit from discrete codes. Next: use structured/clustered inputs where VQ can discover meaningful categories (true "phoneme emergence").
-2. **Scale joint training to higher dims with more epochs** — dim=16 was underfitted at 600 epochs; run with 2k+ epochs to see if joint training advantage holds at scale
-3. **Add GPU support** — add device handling to Config/training; CPU is too slow for dim≥16 experiments
-4. **Complete parameter sweep** — sweep.py is ready but too slow on CPU. Key experiments:
-   - Dimension scaling: dim=64 with h=256
-   - Hidden dim scaling at dim=32: h=[64, 128, 256]
-   - LR sweep at dim=16: lr=[3e-4, 1e-3, 3e-3, 1e-2]
+1. **Interpret publishable experiment results** — All 4 reviewer-demanded experiments complete. Key findings need framing for the paper:
+   - Param-count ablation: sequential advantage is landscape quality, not fewer params
+   - Noisy channel reversal: joint wins when channel is stochastic (frozen receiver can't adapt)
+   - dim=16 underfitting: both methods need more capacity/epochs at higher dims
+   - Gradient conflict: near-zero cosine similarity (orthogonal, not conflicting)
+2. **Update conference paper draft** — Incorporate publishable experiment results into paper/draft.md
+3. **Structured input for VQ** — Random continuous inputs don't benefit from discrete codes. Next: use structured/clustered inputs where VQ can discover meaningful categories (true "phoneme emergence").
+4. **Add GPU support** — add device handling to Config/training; CPU is too slow for dim≥16 experiments
 
 ## Partial Sweep Results (300 recv + 500 emit epochs, 2k samples — fast/underfitted)
 
@@ -67,6 +68,7 @@ Eleven experiments systematically characterized rotational invariance:
 
 ## Recently Completed
 
+- **Publishable experiments complete** (experiments/publishable.py): All 4 reviewer-demanded experiments ran successfully (62.5 min CPU). Param-count ablation proves landscape quality (matched-params never converges). Structured channels reveal sequential wins deterministic (20x), joint wins noisy. Gradient conflict shows orthogonal (not conflicting) gradients. Results in results/publishable.json, figures in figures/pub_*.png.
 - **Conference paper draft** (paper/draft.md): Complete 5700-word draft assembled from 8 AFK tasks. Includes Abstract, Intro, Related Work (15 refs), Method, 4 Experiment blocks, Discussion, Conclusion, 5 figures. Ready for PI review.
 - **Noise alignment boundary** (obj-028): C_i(pipeline) degrades gracefully with noise — no cliff. Trained Receiver maintains C_i>0.97 up to σ=1.0, drops to 0.65 at σ=3.0. Fixed linear degrades faster (0.73 at σ=0.1). C_i predicts MSE: R=-0.69 (trained), R=-0.78 (fixed). Validates C_i as surrogate metric. PACE job 5390043, RTX_6000.
 - **Literature assessment** (2026-03-22): Full-pipeline inverse finding has named precedents (Widrow adaptive inverse control, Wolpert/Kawato internal models, Khatib operational space). Novel contributions: C_i measurement (1.0 vs 0), pre-trained-frozen-decoder regime, and formal justification for CrossFormer/GR00T N1 shared-trunk architectures. See tasks/research.md.
