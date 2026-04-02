@@ -1,0 +1,26 @@
+
+============================================================
+ARCHITECTURE: MLP
+============================================================
+  seed=42... seq=0.000454, jnt=0.000261, matched=0.374704
+  seed=43... seq=0.000406, jnt=0.047723, matched=0.392052
+  seed=44... seq=0.000546, jnt=0.000317, matched=0.380314
+  sequential: MSE=0.000468±0.000058, thresh=10±0
+  joint: MSE=0.016100±0.022361, thresh=354±105
+  matched: MSE=0.382357±0.007228, thresh=501±0
+
+============================================================
+ARCHITECTURE: TRANSFORMER
+============================================================
+  seed=42... seq=0.128495, jnt=0.181429, matched=0.211979
+  seed=43... seq=0.107757, jnt=0.114718, matched=0.365039
+  seed=44... seq=0.117846, jnt=0.132376, matched=0.751149
+  sequential: MSE=0.118033±0.008467, thresh=501±0
+  joint: MSE=0.142841±0.028222, thresh=501±0
+  matched: MSE=0.442722±0.226866, thresh=501±0
+
+=== GENERATING FIGURES ===
+Saved figures/pub_architecture_comparison.png
+Saved figures/pub_arch_threshold_comparison.png
+
+Total time: 13.5 minutes
