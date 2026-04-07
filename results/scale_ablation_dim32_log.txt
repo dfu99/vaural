@@ -1,0 +1,8 @@
+DIM=32, hidden=256, epochs=1500
+  seed=42... seq=0.097977, jnt=0.048170, matched=0.814806 (4.7min)
+  seed=43... seq=0.100108, jnt=0.046758, matched=0.863747 (4.1min)
+  seed=44... seq=0.098005, jnt=0.098000, matched=0.804383 (3.9min)
+  sequential: MSE=0.098697±0.000998
+  joint: MSE=0.064309±0.023830
+  matched: MSE=0.827645±0.025880
+Saved results/scale_ablation_dim32.json
