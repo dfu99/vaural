@@ -2,14 +2,17 @@
 
 ## Current Priorities
 
-1. **Interpret publishable experiment results** — All 4 reviewer-demanded experiments complete. Key findings need framing for the paper:
-   - Param-count ablation: sequential advantage is landscape quality, not fewer params
-   - Noisy channel reversal: joint wins when channel is stochastic (frozen receiver can't adapt)
-   - dim=16 underfitting: both methods need more capacity/epochs at higher dims
-   - Gradient conflict: near-zero cosine similarity (orthogonal, not conflicting)
-2. **Update conference paper draft** — Incorporate publishable experiment results into paper/draft.md
+1. **Bridge to real-world channels** — Replace random linear channel with a realistic nonlinear transform (e.g., pre-trained audio codec like EnCodec/SoundStream). Show two-phase advantage holds on real transforms. Needs GPU (PACE).
+2. **Run second-round reviews and final paper polish** — Re-review v2 draft is running; incorporate feedback for camera-ready quality
 3. **Structured input for VQ** — Random continuous inputs don't benefit from discrete codes. Next: use structured/clustered inputs where VQ can discover meaningful categories (true "phoneme emergence").
 4. **Add GPU support** — add device handling to Config/training; CPU is too slow for dim≥16 experiments
+
+## Recently Completed
+
+- **Create multimodal reviewer simulation skill** — Built 5-persona review panel at `/home/dan/.claude/skills/multimodal-reviewer/SKILL.md` (Reviewers A-E covering multimodal training, gradient dynamics, communications, motor control/neuro, ML theory)
+- **Run first-round simulated reviews** — 5 reviews + meta-review scored paper 4.8/10. Key gaps: missing crossover finding, matched-params ablation, gradient analysis, transformer ablation, overclaiming.
+- **Revise paper draft (v2)** — Complete rewrite at `paper/draft_v2.md`. New title: "When Does Staged Training Beat Joint Training?" Reframed around crossover as central contribution. Added 5 new experiment sections (crossover, matched-params, gradient orthogonality, transformer ablation, channel structure). Recalibrated all claims.
+- **Update conference paper draft** — paper/draft_v2.md incorporates all 4 publishable experiments + transformer ablation + scale ablation
 
 ## Partial Sweep Results (300 recv + 500 emit epochs, 2k samples — fast/underfitted)
 

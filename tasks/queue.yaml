@@ -367,8 +367,100 @@ queue:
   notes: Auto-completed via slack_staged.
 - objective: organize commits and push
   priority: 3
-  status: in_progress
+  status: completed
   added: 2026-03-28 02:28
   source: slack
   channel_id: C0AKWNYUE7N
   started: 2026-03-28 02:29
+  completed: 2026-03-28 02:30
+  commits: 1
+  notes: Auto-completed via slack_staged.
+- objective: what would be the most slam dunk result here? We need to show how this
+    methodology actually improves a model. Higher performance per parameter count?
+    Better benchmarks overall? We need the proof.
+  priority: 3
+  status: skipped
+  added: 2026-04-01 11:57
+  source: slack
+  channel_id: C0AKWNYUE7N
+  started: 2026-04-01 11:58
+  completed: 2026-04-01 12:58
+  notes: Recovered stale in_progress item after newer queued work arrived.
+- objective: what would be the most slam dunk result here? We need to show how this
+    methodology actually improves a model. Higher performance per parameter count?
+    Better benchmarks overall? We need the proof.
+  priority: 3
+  status: completed
+  added: 2026-04-01 12:09
+  source: slack
+  channel_id: C0AKWNYUE7N
+  started: 2026-04-01 12:58
+  completed: 2026-04-01 13:08
+  notes: Auto-completed via assistant_response.
+- objective: what would be the most slam dunk result here? We need to show how this
+    methodology actually improves a model. Higher performance per parameter count?
+    Better benchmarks overall? We need the proof.
+  priority: 3
+  status: completed
+  added: 2026-04-01 12:55
+  source: slack
+  channel_id: C0AKWNYUE7N
+  started: 2026-04-01 13:08
+  completed: 2026-04-01 13:34
+  notes: Recovered completion from staged Slack response after stale session.
+- objective: check on simulation progress
+  priority: 3
+  status: completed
+  added: 2026-04-01 20:03
+  source: slack
+  channel_id: C0AKWNYUE7N
+  started: 2026-04-01 20:05
+  completed: 2026-04-01 20:55
+  notes: Recovered completion from staged Slack response after stale session.
+- objective: Check on simulation progress.
+  priority: 3
+  status: completed
+  added: 2026-04-02 04:43
+  source: slack
+  channel_id: C0AKWNYUE7N
+  started: 2026-04-02 04:45
+  completed: 2026-04-02 05:57
+  commits: 1
+  notes: 'All 4 publishable experiments completed (62.5 min CPU).
+
+    Key results:
+
+    - Param ablation: matched-params (random receiver) never converges (MSE=0.394)
+    vs sequential (MSE=0.000037). Proves landscape quality, not param count.
+
+    - Structured channels: sequential 20x faster on deterministic, joint wins on noisy
+    channels.
+
+    - Gradient conflict: near-zero cosine similarity throughout joint training.
+
+    - Multi-seed: dim=8 consistent (3 seeds), dim=16 underfits for both methods.
+
+    Committed: 6322dcf. Figures: figu'
+- objective: can this be done for transformer architectures? or proven outside of
+    a toy example? the field wants relevance.
+  priority: 3
+  status: completed
+  added: 2026-04-02 10:28
+  source: slack
+  channel_id: C0AKWNYUE7N
+  started: 2026-04-02 10:29
+  completed: 2026-04-02 11:33
+  commits: 9
+  notes: Recovered completion from staged Slack response after stale session.
+- objective: Just like WorldNN is doing with NeuroAI, and RL-Arm will do with robotics,
+    look for experts in this space, learn about them, save an agent or skill to replicate
+    them, then generate a paper, and simulate them as reviewers to make our hypothesis,
+    experiments, story, narrative, interpretation, and discussion ironclad.
+  priority: 3
+  status: completed
+  added: 2026-04-08 00:23
+  source: slack
+  channel_id: C0AKWNYUE7N
+  started: 2026-04-08 00:25
+  completed: 2026-04-08 17:09
+  notes: Recovered completion from staged Slack response after stale session.
